@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="mdc-typography">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +11,9 @@
     <!-- Add to home screen for Android and modern mobile browsers -->
     <link rel="manifest" href="/static/manifest.json">
     <meta name="theme-color" content="#4DBA87">
+
+    <link rel="stylesheet" href="/static/css/font-tofino.css">
+    <link rel="stylesheet" href="/static/css/material-components-web.min.css">
 
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -27,6 +30,8 @@
   </head>
   <body>
     <div id="app">This is your fallback content in case JavaScript fails to load.</div>
+    <script src="/static/js/material-components-web.min.js"></script>
+    <script>mdc.autoInit()</script>
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
