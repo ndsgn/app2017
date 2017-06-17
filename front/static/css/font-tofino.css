@@ -1,0 +1,226 @@
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 100;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Thin.eot");
+  src: url("/static/font/Tofino-Thin.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Thin.woff2") format("woff2"),
+       url("/static/font/Tofino-Thin.woff")  format("woff"),
+       url("/static/font/Tofino-Thin.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 200;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Light.eot");
+  src: url("/static/font/Tofino-Light.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Light.woff2") format("woff2"),
+       url("/static/font/Tofino-Light.woff")  format("woff"),
+       url("/static/font/Tofino-Light.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Book.eot");
+  src: url("/static/font/Tofino-Book.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Book.woff2") format("woff2"),
+       url("/static/font/Tofino-Book.woff")  format("woff"),
+       url("/static/font/Tofino-Book.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Regular.eot");
+  src: url("/static/font/Tofino-Regular.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Regular.woff2") format("woff2"),
+       url("/static/font/Tofino-Regular.woff")  format("woff"),
+       url("/static/font/Tofino-Regular.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Medium.eot");
+  src: url("/static/font/Tofino-Medium.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Medium.woff2") format("woff2"),
+       url("/static/font/Tofino-Medium.woff")  format("woff"),
+       url("/static/font/Tofino-Medium.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Bold.eot");
+  src: url("/static/font/Tofino-Bold.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Bold.woff2") format("woff2"),
+       url("/static/font/Tofino-Bold.woff")  format("woff"),
+       url("/static/font/Tofino-Bold.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Black.eot");
+  src: url("/static/font/Tofino-Black.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Black.woff2") format("woff2"),
+       url("/static/font/Tofino-Black.woff")  format("woff"),
+       url("/static/font/Tofino-Black.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-Ultra.eot");
+  src: url("/static/font/Tofino-Ultra.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-Ultra.woff2") format("woff2"),
+       url("/static/font/Tofino-Ultra.woff")  format("woff"),
+       url("/static/font/Tofino-Ultra.ttf")   format("truetype");
+}
+
+
+/* Itaic */
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 100;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-ThinItalic.eot");
+  src: url("/static/font/Tofino-ThinItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-ThinItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-ThinItalic.woff")  format("woff"),
+       url("/static/font/Tofino-ThinItalic.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 200;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-LightItalic.eot");
+  src: url("/static/font/Tofino-LightItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-LightItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-LightItalic.woff")  format("woff"),
+       url("/static/font/Tofino-LightItalic.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-BookItalic.eot");
+  src: url("/static/font/Tofino-BookItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-BookItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-BookItalic.woff")  format("woff"),
+       url("/static/font/Tofino-BookItalic.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-RegularItalic.eot");
+  src: url("/static/font/Tofino-RegularItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-RegularItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-RegularItalic.woff")  format("woff"),
+       url("/static/font/Tofino-RegularItalic.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-MediumItalic.eot");
+  src: url("/static/font/Tofino-MediumItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-MediumItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-MediumItalic.woff")  format("woff"),
+       url("/static/font/Tofino-MediumItalic.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-BoldItalic.eot");
+  src: url("/static/font/Tofino-BoldItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-BoldItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-BoldItalic.woff")  format("woff"),
+       url("/static/font/Tofino-BoldItalic.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-BlackItalic.eot");
+  src: url("/static/font/Tofino-BlackItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-BlackItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-BlackItalic.woff")  format("woff"),
+       url("/static/font/Tofino-BlackItalic.ttf")   format("truetype");
+}
+
+@font-face {
+  font-family: "LT Tofino";
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: italic;
+  font-kerning: normal;
+  font-variant: normal;
+  src: url("/static/font/Tofino-UltraItalic.eot");
+  src: url("/static/font/Tofino-UltraItalic.eot")   format('embedded-opentype'),
+       url("/static/font/Tofino-UltraItalic.woff2") format("woff2"),
+       url("/static/font/Tofino-UltraItalic.woff")  format("woff"),
+       url("/static/font/Tofino-UltraItalic.ttf")   format("truetype");
+}
