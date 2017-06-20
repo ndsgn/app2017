@@ -1,38 +1,29 @@
 <template>
     <div class="navbar-fixed">
-        <nav>
+        <nav v-bind:class="{ 'nav-extended': useheaderextend  }">
             <div class="nav-wrapper" :class="color">
                 <a v-on:click="toggleNavBar()" class="button-collapse" :class="textcolor">
                     <i class="material-icons">menu</i>
                 </a>
                 
                 <ul class="left">
-                    <li :class="textcolor" class="nav-header-text">Notícias & Informes</li>
+                    <li :class="textcolor" class="nav-header-text">{{headertext}}</li>
                 </ul>
                 
                 <ul class="right">
+                    <li><i class="material-icons" :class="textcolor">cached</i></li>
                     <li>
                         <router-link to="/search" :class="textcolor">
                             <i class="material-icons">search</i>
                         </router-link>
                     </li>
                 </ul>
+
+                <HeaderExtend v-if="useheaderextend"></HeaderExtend>
             </div>
 
             <transition name="slide">
-                <ul id="slide-out" class="side-nav" v-if="showNav">
-                    <li>
-                        <div class="userView grey lighten-2">
-                            <p class="userinfo grey-text text-darken-3"><strong>{{username}}</strong><br>{{useremail}}</p>
-                            <button v-on:click="logout()" class="waves-effect waves-light btn-flat grey lighten-1 grey-text text-darken-4">SAIR</button>
-                        </div>
-                    </li>
-                    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-                    <li><a href="#!">Second Link</a></li>
-                    <li><div class="divider"></div></li>
-                    <li><a class="subheader">Subheader</a></li>
-                    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-                </ul>
+                <SideNav v-if="showNav"></SideNav>
             </transition>
 
             <transition name="fade">
@@ -45,40 +36,33 @@
 
 
 <script>
+import SideNav from './SideNav'
+import HeaderExtend from './HeaderExtend'
+
 export default {
-    name: 'app',
-    props: ['color', 'textcolor'],
+    name: 'header',
+    components: {SideNav, HeaderExtend},
+    props: ['color', 'textcolor', 'headertext', 'useheaderextend'],
     data () {
         return {
             showNav: false
         }
     },
-    computed: {
-        username() {
-            return this.$store.state.username;
-        },
-        useremail() {
-            return this.$store.state.useremail;
-        }
-    },
     methods: {
         toggleNavBar: function() {
             this.showNav = !this.showNav
-        },
-        logout: function() {
-            this.$router.push({ path: '/' })
         }
     },
-    mounted () {
+    beforeRouteLeave (to, from, next) {
+        this.showNav = false;
+        next();
     }
 }
 </script>
 
 
 <style scoped lang="scss">
-    .side-nav {
-        left: 310px;
-    }
+
     .slide-out-overflow {
         position: fixed;
         top: 0;
@@ -88,6 +72,14 @@ export default {
         height: 100vh;
         z-index: 990;
     }
+
+    .slide-enter-active, .slide-leave-active {
+        transition: left .25s
+    }
+    .slide-enter, .slide-leave-to {
+        left: 0
+    }
+
     .nav-header-text {
         font-size: 20px;
         font-weight: 500;
@@ -95,30 +87,10 @@ export default {
         top: 2px;
     }
 
-    .slide-enter-active, .slide-leave-active {
-        transition: left .5s
-    }
-    .slide-enter, .slide-leave-to {
-        left: 0
-    }
-
     .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s
+        transition: opacity .25s
     }
     .fade-enter, .fade-leave-to {
         opacity: 0
-    }
-
-    p.userinfo {
-        line-height: 25px;
-        padding-bottom: 5px;
-
-        strong {
-            font-weight: 600;
-        }
-    }
-
-    .btn-flat {
-        min-width: auto;
     }
 </style>

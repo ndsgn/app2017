@@ -20,7 +20,7 @@
 
 <script>
   export default {
-    name: 'news',
+    name: 'program',
     data () {
       return {
       }
@@ -36,7 +36,7 @@
 
 <style scoped lang="scss">
     .container {
-        padding: 15px 0 30px;
+        padding: 55px 0 30px;
     }
 
     .card {
