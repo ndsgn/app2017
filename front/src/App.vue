@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    
+    <!-- ncwb2017_2.surge.sh -->
     <router-view name="header"></router-view>
     <router-view name="default"></router-view>
     <router-view name="bottom"></router-view>
@@ -8,43 +10,31 @@
 
 <script>
   export default {
-    name: 'app'
+    name: 'app',
+    methods: {
+    },
+    mounted () {
+    }
   }
 </script>
 
 <style>
-  body {
-    margin: 0;
-  }
 
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-  }
+h1, h2, h3, h4, h5, h6, body {
+  font-family: 'LT Tofino', 'Roboto', sans-serif;
+}
 
-  main {
-    text-align: center;
-    margin-top: 40px;
-  }
+input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
+  border-bottom: 1px solid #e6e6e6;
+}
 
-  header {
-    margin: 0;
-    height: 56px;
-    padding: 0 16px 0 24px;
-    background-color: #4fc08d;
-    color: #ffffff;
-  }
+.btn, .btn-large, .btn-floating, .btn-large, .btn-flat {
+    font-size: 1rem;
+    outline: 0;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 15%;
+    min-width: 100%;
+}
 
-  header span {
-    display: block;
-    position: relative;
-    font-size: 20px;
-    line-height: 1;
-    letter-spacing: .02em;
-    font-weight: 400;
-    box-sizing: border-box;
-    padding-top: 16px;
-  }
 </style>

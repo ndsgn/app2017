@@ -12,14 +12,20 @@
     <link rel="manifest" href="/static/manifest.json">
     <meta name="theme-color" content="#4DBA87">
 
-    <link rel="stylesheet" href="/static/css/font-tofino.css">
-    <link rel="stylesheet" href="/static/css/material-components-web.min.css">
+    <link rel="preload" href="/static/font/Tofino-Book.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/font/Tofino-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/font/Tofino-Bold.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" rel="preload" href="/static/css/font-tofino.css">
 
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="app2017">
     <link rel="apple-touch-icon" href="/static/img/icons/apple-touch-icon-152x152.png">
+
+    <link rel="stylesheet" href="/static/css/material-font.css">
+    <link rel="stylesheet" href="/static/css/materialize.min.css">
     <!-- Add to home screen for Windows -->
     <meta name="msapplication-TileImage" content="/static/img/icons/msapplication-icon-144x144.png">
     <meta name="msapplication-TileColor" content="#000000">
@@ -27,12 +33,15 @@
         for (var file of chunk.files) {
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+
+    <!-- ncwb2017_2.surge.sh -->
   </head>
   <body>
     <div id="app">This is your fallback content in case JavaScript fails to load.</div>
-    <script src="/static/js/material-components-web.min.js"></script>
-    <script>mdc.autoInit()</script>
     <!-- Todo: only include in production -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/materialize.min.js"></script>
+    
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
   </body>
