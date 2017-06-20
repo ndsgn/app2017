@@ -1,7 +1,12 @@
 {
-  "name": "app2017",
-  "short_name": "app2017",
+  "name": "N Curitiba 2017",
+  "short_name": "NCWB2017",
   "icons": [
+    {
+      "src": "/static/img/icons/android-chrome-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
       "sizes": "192x192",
@@ -15,6 +20,8 @@
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#FFFFFF",
+  "theme_color": "#f0888e",
+  "scope": "/",
+  "gcm_sender_id": "316852909828"
 }
