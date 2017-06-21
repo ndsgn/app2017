@@ -11,7 +11,7 @@
                 </ul>
                 
                 <ul class="right">
-                    <li><i class="material-icons" :class="textcolor">cached</i></li>
+                    <li v-on:click="refreshContent()"><i class="material-icons" :class="textcolor">cached</i></li>
                     <li>
                         <router-link to="/search" :class="textcolor">
                             <i class="material-icons">search</i>
@@ -51,6 +51,9 @@ export default {
     methods: {
         toggleNavBar: function() {
             this.showNav = !this.showNav
+        },
+        refreshContent: function() {
+            location.reload(true);
         }
     },
     beforeRouteLeave (to, from, next) {
@@ -61,7 +64,18 @@ export default {
 </script>
 
 
-<style scoped lang="scss">
+<style lang="scss">
+
+    .side-nav {
+        left: 310px;
+    }
+
+    .nav-wrapper {
+        .right {
+            position: relative;
+            z-index: 2;
+        }
+    }
 
     .slide-out-overflow {
         position: fixed;
@@ -76,8 +90,13 @@ export default {
     .slide-enter-active, .slide-leave-active {
         transition: left .25s
     }
+    
     .slide-enter, .slide-leave-to {
         left: 0
+    }
+
+    .slide-enter-to, .slide-leave {
+        left: 310px;
     }
 
     .nav-header-text {

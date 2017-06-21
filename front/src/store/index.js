@@ -7,6 +7,7 @@ const store = new Vuex.Store({
   state: {
     username: 'Bernardo Santos Vailati',
     useremail: 'bernardovailati@gmail.com',
+    activeProgramTab: 'tab1',
     news: [
       {
           id: '10',
@@ -71,8 +72,14 @@ const store = new Vuex.Store({
     ]
   },
   mutations: {
+    ACTIVATE_TAB: function (state, payload) {
+			state.activeProgramTab = payload
+		},
   },
   actions: {
+    activateTab: function(context, targetTab) {
+      context.commit('ACTIVATE_TAB', targetTab);
+		}
   }
 })
 

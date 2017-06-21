@@ -40,9 +40,7 @@ export default {
 
 
 <style scoped lang="scss">
-    .side-nav {
-        left: 310px;
-    }
+
     p.userinfo {
         line-height: 25px;
         padding-bottom: 5px;
