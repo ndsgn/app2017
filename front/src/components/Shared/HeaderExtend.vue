@@ -46,7 +46,7 @@ export default {
     }
 
     .tabs .tab a:hover, .tabs .tab a.active {
-        border-bottom: 3px solid #fff;
+        //border-bottom: 3px solid #fff;
     }
 
 </style>

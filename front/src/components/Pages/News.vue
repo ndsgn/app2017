@@ -29,6 +29,9 @@
         news() {
             return this.$store.state.news;
         }
+    },
+    created() {
+        this.$store.dispatch('getNews');
     }
   }
 </script>
