@@ -33,7 +33,7 @@ const store = new Vuex.Store({
         },
 
         getNews: function(context) {
-            Axios.get(`http://eduardocamillo.com.br/development/ncuritiba2017/news`)
+            Axios.get(`/static/news.json`)
             .then(response => {
                 const news = response.data
                 context.commit('GET_NEWS', news)
@@ -43,7 +43,7 @@ const store = new Vuex.Store({
         },
 
         getProgram: function(context) {
-            Axios.get(`http://eduardocamillo.com.br/development/ncuritiba2017/program`)
+            Axios.get(`/static/program.json`)
             .then(response => {
                 const news = response.data
                 context.commit('GET_PROGRAM', news)
