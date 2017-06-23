@@ -11,7 +11,11 @@
                 </ul>
                 
                 <ul class="right">
-                    <li v-on:click="refreshContent()"><i class="material-icons" :class="textcolor">cached</i></li>
+                    <li>
+                        <a v-on:click="refreshContent()">
+                            <i class="material-icons" :class="textcolor">cached</i>
+                        </a>
+                    </li>
                     <li>
                         <router-link to="/search" :class="textcolor">
                             <i class="material-icons">search</i>
@@ -66,6 +70,15 @@ export default {
 
 <style lang="scss">
 
+    nav a.button-collapse {
+        cursor: pointer; 
+
+        @media only screen and (min-width: 993px) {
+            display: block;
+            cursor: pointer;
+        }
+    }
+
     .side-nav {
         left: 310px;
     }
@@ -85,6 +98,7 @@ export default {
         width: 100vw;
         height: 100vh;
         z-index: 990;
+        overflow: hidden;
     }
 
     .slide-enter-active, .slide-leave-active {

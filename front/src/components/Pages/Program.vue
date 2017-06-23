@@ -63,26 +63,34 @@
     }
 
     .tab-container {
-        position: absolute;
-        top: 104px;
-        left: 0;
         overflow: hidden;
-        width: 100vw;
-        height: calc(100vh - 104px);
+        height: calc(100vh - 116px);
+        margin-top: 51px;
+
+        @media only screen and (max-width: 660px) {
+            width: 100vw;
+            position: absolute;
+            top: 47px;
+            left: 0;
+        }
+
     }
     .tabsingle {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
         overflow: auto;
-        height: calc(100vh - 103px);
+        height: calc(100vh - 110px);
+        position: relative;
+        top: 7px;
+        background: #fff;
     }
 
     .collection {
         margin: 0;
         border: none;
         background: #fff;
+
+        @media only screen and (min-width: 660px) {
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        }
     }
 
     .collection-item {
@@ -143,6 +151,17 @@
         font-size: 14px;
         color: #666;
         padding: 8px 0px 2px 25px;
+
+        @media only screen and (min-width: 660px) {
+            padding: 18px 0px 2px 25px;
+            background: none; 
+            
+            span {
+                color: #666;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
     }
 
     .slidetab-enter-active, .slidetab-leave-active {

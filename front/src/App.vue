@@ -30,6 +30,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: hidden;
+  background: #f3f3f3;
 }
 
 #app {
