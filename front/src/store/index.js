@@ -33,22 +33,37 @@ const store = new Vuex.Store({
         },
 
         getNews: function(context) {
-            Axios.get(`/static/news.json`)
+            Axios.get(`https://ncwb2017_2.surge.sh/static/news.json`)
             .then(response => {
                 const news = response.data
+                // se rolou a chamada, atualiza no localStorage
+                localStorage.setItem("news", JSON.stringify(news))
                 context.commit('GET_NEWS', news)
+
             }).catch(e => {
-                this.errors.push(e)
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                if(localStorage && localStorage.news) {
+                    var news = JSON.parse(localStorage.news)
+                    context.commit('GET_NEWS', news)
+                }
             })
         },
 
         getProgram: function(context) {
-            Axios.get(`/static/program.json`)
+
+            Axios.get(`https://ncwb2017_2.surge.sh/static/program.json`)
             .then(response => {
-                const news = response.data
-                context.commit('GET_PROGRAM', news)
+                const program = response.data
+                // se rolou a chamada, atualiza no localStorage
+                localStorage.setItem("program", JSON.stringify(program))
+                context.commit('GET_PROGRAM', program)
+
             }).catch(e => {
-                this.errors.push(e)
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                if(localStorage && localStorage.program) {
+                    var program = JSON.parse(localStorage.program)
+                    context.commit('GET_PROGRAM', program)
+                }
             })
         }
     }
