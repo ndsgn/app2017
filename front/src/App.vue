@@ -13,7 +13,7 @@
     name: 'app',
     methods: {
     },
-    mounted () {
+    mounted () {  
     }
   }
 </script>

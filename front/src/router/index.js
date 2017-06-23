@@ -6,6 +6,7 @@ import HeaderExtend from '@/components/Shared/HeaderExtend'
 import Login from '@/components/Pages/Login'
 import News from '@/components/Pages/News'
 import Program from '@/components/Pages/Program'
+import Favs from '@/components/Pages/Favs'
 
 Vue.use(Router)
 
@@ -46,6 +47,22 @@ export default new Router({
           headertext: 'Grade de Atividades',
           color: 'red lighten-2',
           textcolor: 'grey-text text-darken-4',
+          useheaderextend: true
+        } 
+      }
+    },
+    {
+      path: '/favs',
+      name: 'Favs',
+      components: {
+        header: Header,
+        default: Favs
+      },
+      props: { 
+        header: {
+          headertext: 'Favoritos',
+          color: 'deep-purple darken-1',
+          textcolor: 'purple-text text-lighten-5',
           useheaderextend: true
         } 
       }

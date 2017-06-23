@@ -6,17 +6,21 @@
                 <div v-for="programHours in programItem.hours">
                     <div class="collection-item-time"><span>{{programHours.hour}}</span></div>
                     <ul class="collection">
-                        <li v-for="programActivity in programHours.activities" :key="programActivity.id" class="collection-item" :class="'collection-item-'+programActivity.type">
+                        <li v-for="programActivity in programHours.activities" 
+                            v-if="favItems.indexOf(programActivity.id) > -1" 
+                            :key="programActivity.id" 
+                            class="collection-item" 
+                            :class="'collection-item-'+programActivity.type">
+
                             <span class="title">{{programActivity.title}}</span>
                             <p>Das {{programActivity.hourStart}} às {{programActivity.hourEnd}}</p>
 
-                            <a v-if="favedActivities.indexOf(programActivity.id) == -1" v-on:click="favActivity(programActivity.id)" class="secondary-content grey-text text-lighten-1"><i class="material-icons">star_outline</i></a>
-                            <a v-else v-on:click="unfavActivity(programActivity.id)" class="secondary-content orange-text text-lighten-1"><i class="material-icons">star</i></a>
+                            <a v-on:click="unfavActivity(programActivity.id)" class="secondary-content orange-text text-lighten-1"><i class="material-icons">star</i></a>
                         </li>
                     </ul>
                 </div>
-
             </div>
+
     </div>
 
   </div>
@@ -24,36 +28,33 @@
 
 
 <script>
-  export default {
+export default {
     name: 'program',
     data () {
-      return {
-      }
+        return {
+        }
     },
     methods: {
-        favActivity: function(activityId) {
-            this.$store.dispatch('saveFav', activityId);
-        },
         unfavActivity: function(activityId) {
             this.$store.dispatch('unsaveFav', activityId);
         }
     },
     computed: {
+        favItems() {
+            return this.$store.state.fav;
+        },
         programItems() {
             return this.$store.state.program;
         },
         activeProgramTab() {
             return this.$store.state.activeProgramTab;
-        },
-        favedActivities() {
-            return this.$store.state.fav;
         }
     },
     created() {
         this.$store.dispatch('getProgram');
         this.$store.dispatch('equalize_fav');
     }
-  }
+}
 </script>
 
 
@@ -134,6 +135,20 @@
         &.collection-item-special {
             span.title {color:#AEAFAE}
             border-color: #AEAFAE;
+        }
+    }
+
+    .collection-empty {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        p {
+            font-weight: 400;
+            color: #bbb;
+            padding-bottom: 25vh;
         }
     }
 

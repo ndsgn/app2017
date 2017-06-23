@@ -8,12 +8,14 @@
                 "hour": "9h",
                 "activities": [
                     {
+                        "id": 1,
                         "title": "Credenciamento",
                         "hourStart": "9h",
                         "hourEnd": "16h30",
                         "type": "other"
                     },
                     {
+                        "id": 2,
                         "title": "Repentina",
                         "hourStart": "9h",
                         "hourEnd": "13h30",
@@ -25,6 +27,7 @@
                 "hour": "12h",
                 "activities": [
                     {
+                        "id": 3,
                         "title": "Almoço",
                         "hourStart": "12h",
                         "hourEnd": "13h00",
@@ -36,6 +39,7 @@
                 "hour": "13h",
                 "activities": [
                     {
+                        "id": 4,
                         "title": "Plenária Inicial",
                         "hourStart": "13h",
                         "hourEnd": "19h30",
@@ -48,6 +52,7 @@
                 "activities": [
 
                     {
+                        "id": 5,
                         "title": "Répiauer",
                         "hourStart": "19h",
                         "hourEnd": "3h30",
@@ -66,6 +71,7 @@
                 "hour": "9h",
                 "activities": [
                     {
+                        "id": 6,
                         "title": "Café da manhã",
                         "hourStart": "9h",
                         "hourEnd": "10h30",
@@ -74,21 +80,24 @@
                 ]
             },
             {
-                "hour": "9h",
+                "hour": "10h",
                 "activities": [
                     {
+                        "id": 7,
                         "title": "Vamos conversar sobre saúde mental?",
                         "hourStart": "9h",
                         "hourEnd": "10h30",
                         "type": "content"
                     },
                     {
+                        "id": 8,
                         "title": "Game Design 101",
                         "hourStart": "9h",
                         "hourEnd": "10h30",
                         "type": "content"
                     },
                     {
+                        "id": 9,
                         "title": "Design e Arte",
                         "hourStart": "9h",
                         "hourEnd": "10h30",
@@ -100,6 +109,7 @@
                 "hour": "12h",
                 "activities": [
                     {
+                        "id": 10,
                         "title": "Almoço",
                         "hourStart": "12h",
                         "hourEnd": "13h00",
@@ -111,6 +121,7 @@
                 "hour": "13h",
                 "activities": [
                     {
+                        "id": 11,
                         "title": "Plenária Inicial",
                         "hourStart": "13h",
                         "hourEnd": "19h30",
@@ -123,6 +134,7 @@
                 "activities": [
 
                     {
+                        "id": 12,
                         "title": "Répiauer",
                         "hourStart": "19h",
                         "hourEnd": "3h30",
