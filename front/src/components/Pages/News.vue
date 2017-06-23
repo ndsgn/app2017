@@ -2,7 +2,7 @@
   <div class="container">
     <div class="col s12 m7">
 
-        <div v-for="message in news" class="card z-depth-2">
+        <div v-for="message in news" class="card z-depth-1">
             <div class="card-content">
                 <span class="card-subtitle">{{message.subtitle}}</span>
                 <span class="card-title">{{message.title}}</span>
@@ -20,7 +20,7 @@
 
 <script>
   export default {
-    name: 'login',
+    name: 'news',
     data () {
       return {
       }
@@ -29,6 +29,9 @@
         news() {
             return this.$store.state.news;
         }
+    },
+    created() {
+        this.$store.dispatch('getNews');
     }
   }
 </script>

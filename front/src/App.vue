@@ -13,12 +13,36 @@
     name: 'app',
     methods: {
     },
-    mounted () {
+    mounted () {  
     }
   }
 </script>
 
 <style>
+
+body {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: -1px;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden;
+  background: #f6f6f6;
+}
+
+#app {
+  width:100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  z-index: 2;
+  margin: 0;
+  padding:0;
+  overflow-y: auto;
+}
 
 h1, h2, h3, h4, h5, h6, body {
   font-family: 'LT Tofino', 'Roboto', sans-serif;
