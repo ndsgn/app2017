@@ -46,7 +46,7 @@ import HeaderExtend from './HeaderExtend'
 export default {
     name: 'header',
     components: {SideNav, HeaderExtend},
-    props: ['color', 'textcolor', 'headertext', 'useheaderextend'],
+    props: ['color', 'textcolor', 'headertext', 'useheaderextend', 'themeColor'],
     data () {
         return {
             showNav: false

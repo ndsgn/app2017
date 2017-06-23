@@ -4,7 +4,8 @@
 
             <div v-for="programItem in programItems" :key="programItem.tabId"  v-if="activeProgramTab == programItem.tabId" class="col s12 tabsingle">
                 <div v-for="programHours in programItem.hours">
-                    <div class="collection-item-time"><span>{{programHours.hour}}</span></div>
+                    <div class="collection-item-time" v-if="shouldShowHourLabel(programHours.activities)"><span>{{programHours.hour}}</span></div>
+                    
                     <ul class="collection">
                         <li v-for="programActivity in programHours.activities" 
                             v-if="favItems.indexOf(programActivity.id) > -1" 
@@ -37,6 +38,16 @@ export default {
     methods: {
         unfavActivity: function(activityId) {
             this.$store.dispatch('unsaveFav', activityId);
+        },
+        shouldShowHourLabel: function(hourActivities) {
+            let shouldShow = false
+
+            //verifica se quaisquer das atividades está favoritada. Se sim, shouldShow vira true, e o horário vai aparecer
+            for (let activity of hourActivities) {
+                (this.favItems.indexOf(activity.id) > -1) ? shouldShow = true : shouldShow = false
+            }
+
+            return shouldShow
         }
     },
     computed: {
@@ -90,6 +101,7 @@ export default {
 
         @media only screen and (min-width: 660px) {
             box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+            margin: 0 5px;
         }
     }
 
@@ -103,6 +115,7 @@ export default {
             position: absolute;
             top: 23px;
             right: 16px;
+            cursor: pointer;
         }
 
         span.title {
@@ -165,6 +178,17 @@ export default {
         font-size: 14px;
         color: #666;
         padding: 8px 0px 2px 25px;
+
+        @media only screen and (min-width: 660px) {
+            padding: 18px 0px 2px 32px;
+            background: none; 
+            
+            span {
+                color: #666;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
     }
 
     .slidetab-enter-active, .slidetab-leave-active {

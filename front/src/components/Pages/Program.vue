@@ -80,7 +80,6 @@
         height: calc(100vh - 110px);
         position: relative;
         top: 7px;
-        background: #fff;
     }
 
     .collection {
@@ -90,6 +89,7 @@
 
         @media only screen and (min-width: 660px) {
             box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+            margin: 0 5px;
         }
     }
 
@@ -103,6 +103,7 @@
             position: absolute;
             top: 23px;
             right: 16px;
+            cursor: pointer;
         }
 
         span.title {
@@ -153,7 +154,7 @@
         padding: 8px 0px 2px 25px;
 
         @media only screen and (min-width: 660px) {
-            padding: 18px 0px 2px 25px;
+            padding: 18px 0px 2px 32px;
             background: none; 
             
             span {
