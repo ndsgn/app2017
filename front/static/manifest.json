@@ -22,5 +22,6 @@
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#f0888e",
-  "scope": "/"
+  "scope": "/",
+  "gcm_sender_id": "316852909828"
 }
