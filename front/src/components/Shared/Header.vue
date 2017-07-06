@@ -40,8 +40,8 @@
 
 
 <script>
-import SideNav from './SideNav'
-import HeaderExtend from './HeaderExtend'
+import SideNav from '@/components/Shared/SideNav'
+import HeaderExtend from '@/components/Shared/HeaderExtend'
 
 export default {
     name: 'header',

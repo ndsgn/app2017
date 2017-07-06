@@ -12,7 +12,7 @@
                         "title": "Credenciamento",
                         "hourStart": "9h",
                         "hourEnd": "16h30",
-                        "type": "other"
+                        "type": "morning"
                     },
                     {
                         "id": 2,
@@ -75,7 +75,7 @@
                         "title": "Café da manhã",
                         "hourStart": "9h",
                         "hourEnd": "10h30",
-                        "type": "Lunch"
+                        "type": "lunch"
                     }
                 ]
             },

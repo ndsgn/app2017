@@ -47,6 +47,22 @@ export default new Router({
       }
     },
     {
+      path: '/program/activity/:id',
+      name: 'ProgramActivity',
+      components: {
+        header: Header,
+        default: Program
+      },
+      props: { 
+        header: {
+          headertext: 'Grade de Atividades',
+          color: 'red lighten-2',
+          textcolor: 'grey-text text-darken-4',
+          useheaderextend: true
+        } 
+      }
+    },
+    {
       path: '/program',
       name: 'Program',
       components: {
