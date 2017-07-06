@@ -1,26 +1,27 @@
 <template>
 
     <li class="collection-item" :class="'collection-item-'+programActivity.type">
+        <router-link 
+            :to="'/program/activity/'+ programActivity.id" 
+            class="collection-item-link">
+        </router-link>
+        
         <span class="title">{{programActivity.title}}</span>
         <p>Das {{programActivity.hourStart}} às {{programActivity.hourEnd}}</p>
 
-        <a v-if="favedActivities.indexOf(programActivity.id) == -1" 
-            v-on:click="favActivity(programActivity.id)" 
-            class="secondary-content grey-text text-lighten-1"><i class="material-icons">star_outline</i>
-        </a>
-        <a v-else 
-            v-on:click="unfavActivity(programActivity.id)" 
-            class="secondary-content orange-text text-lighten-1"><i class="material-icons">star</i>
-        </a>
+        <FavStar :programActivityId="programActivity.id"></FavStar>
     </li>
 
 </template>
 
 
 <script>
+import FavStar from '@/components/Shared/FavStar'
+
 export default {
     name: 'collectionItem',
     props: ['programActivity'],
+    components: {FavStar},
     data () {
         return {
         }
@@ -31,6 +32,9 @@ export default {
         },
         unfavActivity: function(activityId) {
             this.$store.dispatch('unsaveFav', activityId);
+        },
+        showActivity:function() {
+            this.$emit('showActivity')
         }
     },
     computed: {
@@ -50,17 +54,18 @@ export default {
         border-bottom: none;
         position: relative;
 
-        .secondary-content {
-            position: absolute;
-            top: 23px;
-            right: 16px;
-            cursor: pointer;
-        }
-
         span.title {
             font-size: 14px;
             font-weight: 600;
             text-transform: uppercase;
+        }
+
+        a.collection-item-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: calc(100% - 60px);
+            height: 100%;
         }
 
         p {
@@ -68,31 +73,31 @@ export default {
         }
 
         &.collection-item-party {
-            span.title {color:#7F6D9A}
+            span.title, span.title a {color:#7F6D9A}
             border-color: #7F6D9A;
         }
         &.collection-item-cone {
-            span.title {color:#46BBE6}
+            span.title, span.title a {color:#46BBE6}
             border-color: #46BBE6;
         }
         &.collection-item-content {
-            span.title {color:#E67A9F}
+            span.title, span.title a {color:#E67A9F}
             border-color: #E67A9F;
         }
         &.collection-item-morning {
-            span.title {color:#82A75E}
+            span.title, span.title a {color:#82A75E}
             border-color: #82A75E;
         }
         &.collection-item-lunch {
-            span.title {color:#E19255}
+            span.title, span.title a {color:#E19255}
             border-color: #E19255;
         }
         &.collection-item-other {
-            span.title {color:#61BBB7}
+            span.title, span.title a {color:#61BBB7}
             border-color: #61BBB7;
         }
         &.collection-item-special {
-            span.title {color:#AEAFAE}
+            span.title, span.title a {color:#AEAFAE}
             border-color: #AEAFAE;
         }
     }

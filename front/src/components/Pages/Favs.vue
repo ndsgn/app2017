@@ -36,8 +36,8 @@
 
 
 <script>
-import CollectionItem from "../Shared/CollectionItem"
-import CollectionTime from "../Shared/CollectionTime"
+import CollectionItem from "@/components/Shared/CollectionItem"
+import CollectionTime from "@/components/Shared/CollectionTime"
 
 export default {
     name: 'program',

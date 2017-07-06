@@ -12,7 +12,8 @@ const store = new Vuex.Store({
         activeProgramTab: 'tab1',
         news: [],
         program: [],
-        fav: []
+        fav: [],
+        activities: []
     },
 
     mutations: {
@@ -24,6 +25,9 @@ const store = new Vuex.Store({
         },
         GET_PROGRAM: function (state, payload) {
             state.program = payload
+        },
+        GET_ACTIVITIES: function (state, payload) {
+            state.activities = payload
         },
         EQUALIZE_FAV: function(state) {
             if(localStorage && localStorage.fav) {
@@ -102,7 +106,25 @@ const store = new Vuex.Store({
 
         unsaveFav: function(context, activityId) {
             context.commit('UNSAVE_FAV', activityId)
-        }
+        },
+
+        getActivities: function(context) {
+
+            Axios.get(`/static/activities.json`)
+            .then(response => {
+                const activities = response.data
+                // se rolou a chamada, atualiza no localStorage
+                localStorage.setItem("activities", JSON.stringify(activities))
+                context.commit('GET_ACTIVITIES', activities)
+
+            }).catch(e => {
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                if(localStorage && localStorage.activities) {
+                    var activities = JSON.parse(localStorage.activities)
+                    context.commit('GET_ACTIVITIES', activities)
+                }
+            })
+        },
     }
 })
 
