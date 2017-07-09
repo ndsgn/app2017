@@ -14,24 +14,37 @@
         
     </div>
 
+    <FloatButton 
+        v-if="admin" 
+        v-on:action="toggleModal()" 
+        color="amber lighten-3"
+        icon="add">
+    </FloatButton>
+
   </div>
 </template>
 
 
 <script>
-  export default {
+import FloatButton from "@/components/Shared/FloatButton"
+
+export default {
     name: 'news',
+    components: {FloatButton},
     data () {
-      return {
-      }
+        return {
+            admin: false,
+            showModal: false,
+        }
     },
     computed: {
         news() {
-            return this.$store.state.news;
+            return this.$store.state.news
         }
     },
     created() {
-        this.$store.dispatch('getNews');
+        this.$store.dispatch('getNews')
+        this.admin = this.$store.state.isAdmin
     }
   }
 </script>

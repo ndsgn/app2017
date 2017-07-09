@@ -1,0 +1,44 @@
+[
+    {
+        "group": "1",
+        "group_title": "Alojamento",
+        "group_content": [
+            {
+                "item_id": "2",
+                "item_title": "Como faz para chegar no alojamento de carro /ônibus?",
+                "item_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat lorem quis felis porttitor, sed venenatis orci tristique. Interdum et malesuada fames ac ante ipsum primis in faucibus. "
+            },
+            {
+                "item_id": "3",
+                "item_title": "Tem hoteis / hostels / pousadas perto do alojamento?",
+                "item_content": "Duis neque est, efficitur eu quam a, mattis bibendum mauris. Morbi posuere, dui ac sollicitudin vulputate, quam orci tempor."
+            },
+            {
+                "item_id": "4",
+                "item_title": "Há tomadas no alojamento?",
+                "item_content": "Pellentesque malesuada lectus sed justo consequat posuere. Phasellus id facilisis velit, sed consequat lectus. Quisque accumsan viverra condimentum. In sed eleifend mi, a aliquam turpis. Sed congue ante vel erat sagittis pretium. Sed convallis varius lobortis."
+            }
+        ]
+    },
+    {
+        "group": "2",
+        "group_title": "Inscrições",
+        "group_content": [
+            {
+                "item_id": "5",
+                "item_title": "Posso transferir minha inscrição para outra pessoa?",
+                "item_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat lorem quis felis porttitor, sed venenatis orci tristique. Interdum et malesuada fames ac ante ipsum primis in faucibus. "
+            },
+            {
+                "item_id": "6",
+                "item_title": "O que preciso trazer no dia do encontro para efeturar meu credenciamento?",
+                "item_content": "Duis neque est, efficitur eu quam a, mattis bibendum mauris. Morbi posuere, dui ac sollicitudin vulputate, quam orci tempor."
+            },
+            {
+                "item_id": "7",
+                "item_title": "Vão ser vendidas inscrições diárias para o encontro?",
+                "item_content": "Pellentesque malesuada lectus sed justo consequat posuere. Phasellus id facilisis velit, sed consequat lectus. Quisque accumsan viverra condimentum. In sed eleifend mi, a aliquam turpis. Sed congue ante vel erat sagittis pretium. Sed convallis varius lobortis."
+            }
+        ]
+    }
+]
