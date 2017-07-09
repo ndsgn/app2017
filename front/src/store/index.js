@@ -137,7 +137,6 @@ const store = new Vuex.Store({
             })
         },
 
-<<<<<<< HEAD
         getUser: function(context, data) {
 
             return Axios.post(API_URL + '/login', data)
@@ -151,15 +150,15 @@ const store = new Vuex.Store({
                 }
                 return false;
             }).catch(e => {
-                if(localStorage && localStorage.useremail) {
+                /*if(localStorage && localStorage.useremail) {
                     var useremail = localStorage.useremail;
                     context.commit('GET_ACTIVITIES', useremail);
                     return true;
-                }
+                }*/
                 return false;
             });
-        }
-=======
+        },
+
         editActivity: function(context, theActivity) {
             console.log('This is the post we will send to the endpoint of add/edit URL')
             console.log(theActivity)
@@ -204,7 +203,6 @@ const store = new Vuex.Store({
                 }
             })
         },
->>>>>>> upstream/front-end_dev
     }
 })
 
