@@ -13,7 +13,8 @@ const store = new Vuex.Store({
         news: [],
         program: [],
         fav: [],
-        activities: []
+        activities: [],
+        isAdmin: true
     },
 
     mutations: {
@@ -125,6 +126,21 @@ const store = new Vuex.Store({
                 }
             })
         },
+
+        editActivity: function(context, theActivity) {
+            console.log('This is the post we will send to the endpoint of add/edit URL')
+            console.log(theActivity)
+
+            Axios.post(`APIURL`)
+            .then(response => {
+                // se rolou, avisa e atualiza no store a lista de atividades
+                Materialize.toast('Atividade adicionada com sucesso!', 4000)
+
+            }).catch(e => {
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
+            })
+        }
     }
 })
 
