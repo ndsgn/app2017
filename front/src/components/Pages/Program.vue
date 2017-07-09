@@ -89,7 +89,7 @@ export default {
         this.$store.dispatch('getProgram');
         this.$store.dispatch('getActivities');
         this.$store.dispatch('equalize_fav');
-        this.$route.query.admin && this.$route.query.admin == 'tr' ? this.admin = true : false
+        this.admin = this.$store.state.isAdmin;
     }
 }
 </script>

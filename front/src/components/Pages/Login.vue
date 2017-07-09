@@ -72,6 +72,11 @@
           // Error handling.
         });
       }
+    },
+    methods:{
+      goTo: function() {
+        this.$router.push('News');
+      }
     }
   }
 </script>
