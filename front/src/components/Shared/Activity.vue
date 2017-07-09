@@ -36,6 +36,9 @@
 
             <h4><i class="material-icons">supervisor_account</i> Ministrantes</h4>
             <p>{{activity.speakers}}</p>
+
+            <br>
+            <a v-on:click.prevent="deleteActivity()" v-if="admin" class="waves-effect waves-light btn red accent-4">Apagar atividade</a>
         </section>
 
         <FloatButton 
@@ -114,6 +117,9 @@ export default {
         },
         toggleModal: function() {
             this.showModal = !this.showModal;
+        },
+        deleteActivity: function() {
+            this.$store.dispatch('deleteActivity', this.activityId);
         }
     },
     created() {
@@ -220,6 +226,7 @@ export default {
         padding: 17px;
         height: calc(70vh - 90px);
         overflow: auto;
+        padding-bottom: 75px;
 
         h4 {
             font-size: 12px;

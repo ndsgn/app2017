@@ -26,7 +26,7 @@
           </div>
           <div class="row">
             <div class="col s12 center-align">
-              <router-link to="/news" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">ENTRAR</router-link>
+              <a href="" v-on:click.prevent="goTo()" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">ENTRAR</a>
               <p class="center-align"><a href="#">Esqueceu sua senha?</a></p>
             </div>
           </div>
@@ -52,6 +52,11 @@
     data () {
       return {
         msg: 'Welcome to Your Vue.js PWA'
+      }
+    },
+    methods:{
+      goTo: function() {
+        this.$router.push('News');
       }
     }
   }
