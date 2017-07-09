@@ -4,11 +4,13 @@ import Axios from 'axios'
 
 Vue.use(Vuex)
 
+var API_URL = 'https://localhost:5000/api';
+
 const store = new Vuex.Store({
 
     state: {
-        username: 'Bernardo Santos Vailati',
-        useremail: 'bernardovailati@gmail.com',
+        username: '',
+        useremail: '',
         activeProgramTab: 'tab1',
         news: [],
         program: [],
@@ -28,6 +30,9 @@ const store = new Vuex.Store({
         },
         GET_ACTIVITIES: function (state, payload) {
             state.activities = payload
+        },
+        GET_USER: function (state, payload) {
+            state.useremail = payload
         },
         EQUALIZE_FAV: function(state) {
             if(localStorage && localStorage.fav) {
@@ -125,6 +130,28 @@ const store = new Vuex.Store({
                 }
             })
         },
+
+        getUser: function(context, data) {
+
+            return Axios.post(API_URL + '/login', data)
+            .then(response => {
+                // If r is 'Error' the login has failed, else, it's all good.
+                var r = response.data[0]['Action'];
+                if (r != 'Error') {
+                    localStorage.setItem("useremail", data["email"]);
+                    context.commit('GET_USER', data["email"]);
+                    return true;
+                }
+                return false;
+            }).catch(e => {
+                if(localStorage && localStorage.useremail) {
+                    var useremail = localStorage.useremail;
+                    context.commit('GET_ACTIVITIES', useremail);
+                    return true;
+                }
+                return false;
+            });
+        }
     }
 })
 

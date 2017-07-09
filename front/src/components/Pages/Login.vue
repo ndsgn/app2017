@@ -11,22 +11,22 @@
 
       <div class="row">
         <div class="col s2">&nbsp;</div>
-        <form class="col s8">
+        <form class="col s8" v-on:submit.prevent="login()">
           <div class="row">
             <div class="input-field col s12">
-              <input value="" id="email" type="email" class="validate">
+              <input id="email" ref="email" type="email" class="validate">
               <label for="email">Email</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="password" type="password" class="validate">
+              <input id="password" ref="password" type="password" class="validate">
               <label for="password">Password</label>
             </div>
           </div>
           <div class="row">
             <div class="col s12 center-align">
-              <router-link to="/news" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">ENTRAR</router-link>
+              <input type="submit" value="ENTRAR" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">
               <p class="center-align"><a href="#">Esqueceu sua senha?</a></p>
             </div>
           </div>
@@ -50,8 +50,27 @@
   export default {
     name: 'login',
     data () {
-      return {
-        msg: 'Welcome to Your Vue.js PWA'
+      return {}
+    },
+    methods: {
+      login: function() {
+        var useremail = this.$refs.email.value
+        var password = this.$refs.password.value;
+        var that = this;
+        this.$store.dispatch('getUser', {
+          email: useremail,
+          senha: password
+        }).then(function(response) {
+          if (response) {
+            console.log(response)
+            that.$router.push('News'); 
+          } else {
+            // Error handling.
+          }
+        })
+        .catch(function(error) {
+          // Error handling.
+        });
       }
     }
   }
