@@ -12,10 +12,6 @@
         <li><router-link to="/maps"><i class="material-icons">map</i>Mapa do Alojamento</router-link></li>
         <li><router-link to="/faq"><i class="material-icons">help_outline</i>Perguntas Frequentes</router-link></li>
         <li><router-link to="/phones"><i class="material-icons">call</i>Telefones Importantes</router-link></li>
-        <li><a class="subheader">Administração</a></li>
-        <li><router-link to="/_adminNews"><i class="material-icons">sms_failed</i>Adicionar notícias</router-link></li>
-        <li><router-link to="/_adminActivities"><i class="material-icons">mode_edit</i>Editar atividades</router-link></li>
-        <li><router-link to="/_adminMembers"><i class="material-icons">wc</i>Encontristas</router-link></li>
     </ul>
 </template>
 

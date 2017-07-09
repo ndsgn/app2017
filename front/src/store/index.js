@@ -14,8 +14,10 @@ const store = new Vuex.Store({
         activeProgramTab: 'tab1',
         news: [],
         program: [],
+        faq: [],
         fav: [],
-        activities: []
+        activities: [],
+        isAdmin: true
     },
 
     mutations: {
@@ -27,6 +29,10 @@ const store = new Vuex.Store({
         },
         GET_PROGRAM: function (state, payload) {
             state.program = payload
+        },
+        GET_FAQ: function (state, payload) {
+            console.log(payload)
+            state.faq = payload
         },
         GET_ACTIVITIES: function (state, payload) {
             state.activities = payload
@@ -131,6 +137,7 @@ const store = new Vuex.Store({
             })
         },
 
+<<<<<<< HEAD
         getUser: function(context, data) {
 
             return Axios.post(API_URL + '/login', data)
@@ -152,6 +159,52 @@ const store = new Vuex.Store({
                 return false;
             });
         }
+=======
+        editActivity: function(context, theActivity) {
+            console.log('This is the post we will send to the endpoint of add/edit URL')
+            console.log(theActivity)
+
+            Axios.post(`APIURL`)
+            .then(response => {
+                // se rolou, avisa e atualiza no store a lista de atividades
+                Materialize.toast('Atividade adicionada com sucesso!', 4000)
+
+            }).catch(e => {
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
+            })
+        },
+
+        deleteActivity: function(context, activityId) {
+            console.log('This is the post we will send to the endpoint of removing URL')
+
+            Axios.post(`APIURL`)
+            .then(response => {
+                // se rolou, avisa e atualiza no store a lista de atividades
+                Materialize.toast('Atividade removida com sucesso!', 4000)
+
+            }).catch(e => {
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
+            })
+        },
+
+        getFaq: function(context) {
+
+            Axios.get(`/static/faq.json`)
+            .then(response => {
+                const faq = response.data
+                localStorage.setItem("faq", JSON.stringify(faq))
+                context.commit('GET_FAQ', faq)
+
+            }).catch(e => {
+                if(localStorage && localStorage.faq) {
+                    var faq = JSON.parse(localStorage.faq)
+                    context.commit('GET_FAQ', faq)
+                }
+            })
+        },
+>>>>>>> upstream/front-end_dev
     }
 })
 

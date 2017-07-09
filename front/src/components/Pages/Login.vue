@@ -26,7 +26,11 @@
           </div>
           <div class="row">
             <div class="col s12 center-align">
+<<<<<<< HEAD
               <input type="submit" value="ENTRAR" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">
+=======
+              <a href="" v-on:click.prevent="goTo()" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">ENTRAR</a>
+>>>>>>> upstream/front-end_dev
               <p class="center-align"><a href="#">Esqueceu sua senha?</a></p>
             </div>
           </div>
@@ -71,6 +75,11 @@
         .catch(function(error) {
           // Error handling.
         });
+      }
+    },
+    methods:{
+      goTo: function() {
+        this.$router.push('News');
       }
     }
   }
