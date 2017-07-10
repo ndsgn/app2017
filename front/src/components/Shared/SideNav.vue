@@ -19,10 +19,6 @@
 <script>
 export default {
     name: 'sidenav',
-    data () {
-        return {
-        }
-    },
     methods: {
         logout: function() {
             this.$store.dispatch('logout');
