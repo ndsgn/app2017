@@ -69,9 +69,7 @@ export default {
                     senha: password
                 }).then(function(response) {
                     if (response) {
-                        console.log(response)
                         that.$router.push('News'); 
-
                     } else {
                         $('form').removeClass('loading')
                         Materialize.toast('Algo deu errado... seus dados estão corretos?', 4000)

@@ -92,7 +92,6 @@ const store = new Vuex.Store({
         },
 
         getProgram: function(context) {
-
             Axios.get(API_URL + "/db/program.json")
             .then(response => {
                 const program = response.data
@@ -126,14 +125,12 @@ const store = new Vuex.Store({
         },
 
         getActivities: function(context) {
-
             Axios.get(API_URL + "/db/activities.json")
             .then(response => {
                 const activities = response.data
                 // se rolou a chamada, atualiza no localStorage
                 localStorage.setItem("activities", JSON.stringify(activities))
                 context.commit('GET_ACTIVITIES', activities)
-
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 if(localStorage && localStorage.activities) {
@@ -143,14 +140,11 @@ const store = new Vuex.Store({
             })
         },
 
-        editActivity: function(context, theActivity) {
-            console.log(theActivity)
-
-            Axios.post(`APIURL`)
+        editActivity: function(context, data) {            
+            return Axios.post(API_URL + "/edit_activity/" + data.id, data)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
-                Materialize.toast('Atividade adicionada com sucesso!', 4000)
-
+                Materialize.toast('Atividade editada com sucesso!', 4000)
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
@@ -158,13 +152,10 @@ const store = new Vuex.Store({
         },
 
         deleteActivity: function(context, activityId) {
-            console.log('This is the post we will send to the endpoint of removing URL')
-
             Axios.post(`APIURL`)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Atividade removida com sucesso!', 4000)
-
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
@@ -172,13 +163,11 @@ const store = new Vuex.Store({
         },
 
         getFaq: function(context) {
-
             Axios.get(API_URL + "/db/faq.json")
             .then(response => {
                 const faq = response.data
                 localStorage.setItem("faq", JSON.stringify(faq))
                 context.commit('GET_FAQ', faq)
-
             }).catch(e => {
                 if(localStorage && localStorage.faq) {
                     var faq = JSON.parse(localStorage.faq)
@@ -190,21 +179,17 @@ const store = new Vuex.Store({
         logout: function(context) {
             localStorage.useremail = ''
             localStorage.fav = []
-
             context.commit('SET_ADMIN', false)
-            context.commit('GET_USER', '')
-            
+            context.commit('GET_USER', '')            
             Router.push('/')
         },
         
         getUser: function(context, data) {
-
             return Axios.post(API_URL + '/login', data)
             .then(response => {
                 var r = response.data[0]['Action'];
                 if (r == "Redir" || r == "Redir_Admin") {
                     context.commit('GET_USER', data["email"])
-
                     r == "Redir_Admin" ? context.commit('SET_ADMIN', true) : context.commit('SET_ADMIN', false)
                     return true;
                 }

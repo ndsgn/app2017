@@ -26,7 +26,7 @@
 
         <section class="activity-content">
             <h4><i class="material-icons">alarm</i> Horário</h4>
-            <p>Das {{activity.hour}}:{{activity.minutes}}</p>
+            <p>{{activity.hourStart}} - {{activity.hourEnd}}</p>
 
             <h4><i class="material-icons">place</i> Local</h4>
             <p>{{activity.place}}</p>
