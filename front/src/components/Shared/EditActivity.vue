@@ -1,7 +1,7 @@
 <template>
 
     <div class="wrapper-modal">
-        <form v-on:submit.prevent="editActivity()" id="modal2" class="modal modal-fixed-footer open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
+        <form v-on:submit.prevent="editActivity()" id="modal2" class="modal modal-fixed-footer open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;" enctype="multipart/form-data">
             <div class="modal-content">
                 <h4>{{words}} atividade</h4>
                 <div class="row">
