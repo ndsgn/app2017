@@ -6,30 +6,24 @@
                 <h4>{{words}} atividade</h4>
                 <div class="row">
 
-                    <input type="hidden" name="activityId" v-model="activity.id" id="activityId" :value="activityId" >
+                    <input type="hidden" name="activityId" v-model="activity.id" id="activityId" ref="activityId" :value="activityId" >
 
                     <div class="input-field col s12">
-                        <input id="title" name="title" type="text" v-model="activity.title">
+                        <input id="title" ref="title" name="title" type="text" v-model="activity.title" @change="saveChange">
                         <label class="active" for="title">Título da atividade</label>
                     </div>
 
                     <div class="input-field col s6">
-                        <select id="hour" v-model="activity.hour" name="hour" v-on:change="alert('lll')">
-                            <option value="" disabled>Escolha a hora</option>
-                            <option v-for="n in 24" :key="n" :value="n">{{n}}</option>
-                        </select>
-                        <label>Horário</label>
+                        <input id="hourStart" ref="hourStart" v-model="activity.hourStart" name="hourStart" type="text" @change="saveChange">
+                        <label class="active" for="hourStart">Inicio</label>
                     </div>
                     <div class="input-field col s6">
-                        <select id="minutes" v-model="activity.minutes" name="minutes">
-                            <option value="" disabled>Escolha os minutos</option>
-                            <option v-for="n in 6" :key="n" :value="(n - 1)*10">{{(n - 1)*10}}</option>
-                        </select>
-                        <label>Minutos</label>
+                        <input id="hourEnd" ref="hourEnd" v-model="activity.hourEnd" name="hourEnd" type="text" @change="saveChange">
+                        <label class="active" for="hourEnd">Termino</label>
                     </div>
 
                     <div class="input-field col s12">
-                        <input id="place" v-model="activity.place" name="place" type="text">
+                        <input id="place" ref="place" v-model="activity.place" name="place" type="text" @change="saveChange">
                         <label class="active" for="place">Local</label>
                     </div>
 
@@ -37,21 +31,21 @@
                         <div class="col s6" style="position: relative">
                             <div class="btn">
                                 <span>Image</span>
-                                <input id="activity-image" name="activity-image" type="file">
+                                <input id="activity-image" ref="image" name="activity-image" type="file" @change="onFileChange">
                             </div>
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
+                            <input class="file-path validate" type="text" @change="saveChange">
                         </div>
                     </div>
 
                     <div class="input-field col s12">
-                        <textarea id="description" v-model="activity.description" name="description" class="materialize-textarea" data-length="120"></textarea>
+                        <textarea id="description" ref="description" v-model="activity.description" name="description" class="materialize-textarea" data-length="120" @change="saveChange"></textarea>
                         <label class="active" for="description">Descrição</label>
                     </div>
 
                     <div class="input-field col s12">
-                        <textarea id="owners" v-model="activity.speakers" name="owners" class="materialize-textarea" data-length="120"></textarea>
+                        <textarea id="owners" ref="speakers" v-model="activity.speakers" name="owners" class="materialize-textarea" data-length="120" @change="saveChange"></textarea>
                         <label class="active" for="owners">Ministrantes</label>
                     </div>
 
@@ -76,13 +70,14 @@ export default {
             activity: {
                 id: '',
                 title: '',
-                hour: '',
-                minutes: '',
+                hourStart: '',
+                hourEnd: '',
                 place: '',
                 image: '',
                 description: '',
                 speakers: ''
-            }
+            },
+            save_data: {}
         }
     },
     computed: {
@@ -103,13 +98,35 @@ export default {
             $('#editActivity').submit();
         },
         editActivity: function() {
-            this.$store.dispatch('editActivity', this.activity);
+            this.save_data.id = this.activity.id;
+            this.save_data.date = this.activity.date;
+            this.save_data.type = this.activity.type;
+            this.save_data.hourEnd = this.$refs.hourEnd.value;
+            this.save_data.title = this.$refs.title.value;
+            this.$store.dispatch('editActivity', this.save_data);
+        },
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.createImage(files[0]);
+        },
+        createImage(file) {
+            var image = new Image();
+            var reader = new FileReader();
+            var that = this;
+            reader.onload = (e) => {
+                that.save_data.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        saveChange(e) {
+            var ref = e.target.id;
+            this.save_data[ref] = e.target.value;
         }
     },
     mounted: function() {
-        $(document).ready(function() {
-            $('select').material_select();
-        });
+        this.save_data.previousHourStart = this.$refs.hourStart.value;
     },
     created() {
 

@@ -2,17 +2,21 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS, cross_origin
 from OpenSSL import SSL
 from admin import *
-import requests
+from PIL import Image
+import re
+import cStringIO
+import json
+import os
 
 context = SSL.Context(SSL.SSLv23_METHOD)
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(app, resources={r'/api/*': {'origins': '*'}})
 
+app.config['BASE_URL'] = 'https://localhost:5000/'
 app.config['DB_FOLDER'] = 'db/'
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
-
 
 # Code slightly modified from https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
 # The backend will be independent from the frontend.
@@ -32,8 +36,106 @@ def login():
 
 @app.route('/api/db/<path:filename>')
 def serve_db(filename):
-    print(filename)
     return send_from_directory(app.config['DB_FOLDER'], filename)
+
+@app.route('/api/uploads/<path:filename>')
+def serve_images(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/api/edit_activity/<int:activity_id>', methods=['POST'])
+def edit_activity(activity_id):
+    data = json.loads(request.data)
+    print(data)
+
+    if 'image' in data: 
+        image_data = re.sub('^data:image/.+;base64,', '', data['image']).decode('base64')
+        image = Image.open(cStringIO.StringIO(image_data))
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], str(activity_id) + '.' + (image.format).lower())    
+        image.save(image_path, format=image.format)
+        data['image'] = app.config['BASE_URL'] + 'api/' + image_path
+
+    with open('db/activities.json', 'r') as activities:
+        db_data = json.load(activities)
+
+    index = 0
+    for i in db_data:
+        if i['id'] == activity_id:
+            break
+        index = index + 1
+
+    for key, value in data.items():
+        db_data[index][key] = value
+
+    with open('db/activities.json', 'w') as activities:
+        json.dump(db_data, activities)
+
+    if 'hourStart' in data:
+
+        with open('db/program.json', 'r') as program:
+            db_data = json.load(program)
+
+        # Find right date JSON.
+        aux1 = 0
+        for i in db_data:
+            if i['date'] == data['date']:
+                break
+            aux1 = aux1 + 1
+        db_date = db_data[aux1]['hours']
+
+        # Check if hour already exists.
+        aux2 = 0
+        found = False
+        for i in db_data[aux1]['hours']:
+            if i['hour'] == data['hourStart']:
+                found = True
+                break
+            aux2 = aux2 + 1
+
+        if found:
+            # If hour already exists, just add the new activity.
+            db_data[aux1]['hours'][aux2]['activities'].append({
+                        "id": data['id'],
+                        "title": data['title'],
+                        "hourStart": data['hourStart'],
+                        "hourEnd": data['hourEnd'],
+                        "type": data['type']
+                    })
+        else:
+            # If it doesn't, create new hour as well as new activity.
+            db_data[aux1]['hours'].append({
+                "hour": data['hourStart'],
+                "activities": [
+                    {
+                        "id": data['id'],
+                        "title": data['title'],
+                        "hourStart": data['hourStart'],
+                        "hourEnd": data['hourEnd'],
+                        "type": data['type']
+                    }
+                ]
+            })
+
+        # Remove previous entry.
+        aux3 = 0;
+        for i in db_data[aux1]['hours']:
+            if i['hour'] == data['previousHourStart']:
+                break
+            aux3 = aux3 + 1
+
+        aux4 = 0;
+        for i in db_data[aux1]['hours'][aux3]['activities']:
+            if i['id'] == data['id']:
+                break
+            aux4 = aux4 + 1
+
+        del db_data[aux1]['hours'][aux3]['activities'][aux4]
+
+        # Save to JSON.
+        with open('db/program.json', 'w') as program:
+            json.dump(db_data, program)
+
+    return 'Done'
+    
 
 if __name__ == '__main__':
     context = ('ssl.crt', 'ssl.key')
