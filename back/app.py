@@ -35,6 +35,11 @@ def serve_db(filename):
     print(filename)
     return send_from_directory(app.config['DB_FOLDER'], filename)
 
+@app.route('/api/edit_activity/<int:activity_id>')
+def edit_activity(activity_id):
+    print(activity_id)
+    
+
 if __name__ == '__main__':
     context = ('ssl.crt', 'ssl.key')
     app.run(host='0.0.0.0', port=5000, ssl_context=context, threaded=True, debug=True)

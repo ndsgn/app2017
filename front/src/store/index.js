@@ -139,7 +139,6 @@ const store = new Vuex.Store({
         },
       
         editActivity: function(context, theActivity) {
-            console.log('This is the post we will send to the endpoint of add/edit URL')
             console.log(theActivity)
 
             Axios.post(`APIURL`)
