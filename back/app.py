@@ -85,7 +85,7 @@ def edit_activity(activity_id):
 
         return Response('Bad credentials.', 401)
 
-@app.route('/api/delete_activity/<int:activity_id>', methods=['POST'])
+@app.route('/api/delete_activity/<activity_id>', methods=['POST'])
 def delete_activity(activity_id):
     data = json.loads(request.data)
 
