@@ -77,7 +77,6 @@ export default {
                 })
                 .catch(function(error) {
                     $('form').removeClass('loading')
-                    // Error handling.
                 });
             } else {
                 Materialize.toast('Ops, login e senha estão em branco...', 4000)
