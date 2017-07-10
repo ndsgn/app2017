@@ -99,14 +99,6 @@ export default {
         },
         editActivity: function() {
             this.save_data.id = this.mode == 'adding' ? 0 : this.activity.id;
-
-            // Remove this when program.json no longer needed.
-            // And remove fallbacks when date and type have their own fields.
-            this.save_data.date = this.activity.date ? this.activity.date : "Dia 15";
-            this.save_data.type = this.activity.type ? this.activity.type : "special";
-            this.save_data.hourEnd = this.$refs.hourEnd.value;
-            this.save_data.title = this.$refs.title.value;
-
             this.$store.dispatch('editActivity', this.save_data);
         },
         onFileChange(e) {
@@ -130,8 +122,6 @@ export default {
         }
     },
     mounted: function() {
-        // Remove this when program.json no longer needed.
-        this.save_data.previousHourStart = this.$refs.hourStart.value;
     },
     created() {
 
