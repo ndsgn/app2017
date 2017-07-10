@@ -20,7 +20,7 @@
                     {{faq_item.item_content}}
                     <br><br>
                     <a class="waves-effect waves-light btn teal accent-4" v-on:click.prevent="editFaq(faq_item.item_id)">Editar</a>
-                    <a class="waves-effect right waves-light btn red accent-4">Apagar</a>
+                    <a class="waves-effect right waves-light btn red accent-4" v-on:click.prevent="deleteFaq(faq_item.item_id)">Apagar</a>
                 </div>
             </li>
         </ul>
@@ -55,7 +55,8 @@ export default {
                 group: '',
                 content: '',
                 mode: 'adding'
-            }
+            },
+            delete_data: {}
         }
     },
     computed: {
@@ -78,8 +79,7 @@ export default {
             let faqItem = ''
 
             var faq = this.$store.state.faq.forEach(function(e) {
-                e.group_content.find(function (item) { 
-                    console.log(item.item_id)
+                e.group_content.find(function (item) {
                     item.item_id == faqId ? faqItem = item : false 
                     faqItem != '' && faqItem.item_id == item.item_id ? faqItem.group = e.group : false
                 })
@@ -93,6 +93,23 @@ export default {
                 this.editFaqContent.mode = 'editing'
                 this.showModal = true
             }
+        },
+        deleteFaq: function(faqId) {
+            let faqItem = ''
+
+            var faq = this.$store.state.faq.forEach(function(e) {
+                e.group_content.find(function (item) {
+                    item.item_id == faqId ? faqItem = item : false 
+                    faqItem != '' && faqItem.item_id == item.item_id ? faqItem.group = e.group : false
+                })
+            })
+
+            if(faqItem !== '') {
+                this.delete_data.id = faqItem.item_id
+                this.delete_data.group = faqItem.group
+            }
+
+            this.$store.dispatch('deleteFaq', this.delete_data);
         }
     },
     created() {
