@@ -76,38 +76,40 @@ export default {
             return this.$store.state.activities.find(x => x.id == this.$route.params.id);
         },
         color() {
-            switch(this.activity.type) {
-                case 'party':
-                    var obj = {text: 'deep-purple-text text-darken-4', bg: 'deep-purple darken-4'}
-                    return obj
-                    break
-                case 'cone':
-                    var obj = {text: 'light-blue-text text-darken-3', bg: 'light-blue darken-3'}
-                    return obj
-                    break
-                case 'content':
-                    var obj = {text: 'red-text text-darken-3', bg: 'red darken-3'}
-                    return obj
-                    break
-                case 'morning':
-                    var obj = {text: 'grey-text text-darken-3', bg: 'grey darken-3'}
-                    return obj
-                    break
-                case 'lunch':
-                    var obj = {text: 'deep-orange-text text-darken-2', bg: 'deep-orange darken-2'}
-                    return obj
-                    break
-                case 'other':
-                    var obj = {text: 'teal-text text-darken-4', bg: 'teal darken-4'}
-                    return obj
-                    break
-                case 'special':
-                    var obj = {text: 'grey-text text-darken-3', bg: 'grey darken-3'}
-                    return obj
-                    break
-                default:
-                    var obj = {text: 'orange-text text-lighten-1', bg: 'orange lighten-1'}
-                    return obj
+            if(this.activity.type != undefined) {
+                switch(this.activity.type) {
+                    case 'party':
+                        var obj = {text: 'deep-purple-text text-darken-4', bg: 'deep-purple darken-4'}
+                        return obj
+                        break
+                    case 'cone':
+                        var obj = {text: 'light-blue-text text-darken-3', bg: 'light-blue darken-3'}
+                        return obj
+                        break
+                    case 'content':
+                        var obj = {text: 'red-text text-darken-3', bg: 'red darken-3'}
+                        return obj
+                        break
+                    case 'morning':
+                        var obj = {text: 'grey-text text-darken-3', bg: 'grey darken-3'}
+                        return obj
+                        break
+                    case 'lunch':
+                        var obj = {text: 'deep-orange-text text-darken-2', bg: 'deep-orange darken-2'}
+                        return obj
+                        break
+                    case 'other':
+                        var obj = {text: 'teal-text text-darken-4', bg: 'teal darken-4'}
+                        return obj
+                        break
+                    case 'special':
+                        var obj = {text: 'grey-text text-darken-3', bg: 'grey darken-3'}
+                        return obj
+                        break
+                    default:
+                        var obj = {text: 'orange-text text-lighten-1', bg: 'orange lighten-1'}
+                        return obj
+                }
             }
         }
     },

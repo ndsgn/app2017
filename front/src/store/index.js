@@ -123,9 +123,12 @@ const store = new Vuex.Store({
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Atividade editada com sucesso!', 4000)
+                context.dispatch('getActivities')
+                return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
+                return false
             })
         },
 
@@ -135,9 +138,12 @@ const store = new Vuex.Store({
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Atividade removida com sucesso!', 4000)
+                dispatch('getActivities')
+                return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
+                return false
             })
         },
 
@@ -161,6 +167,8 @@ const store = new Vuex.Store({
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Pergunta editada com sucesso!', 4000)
+                dispatch('getFaq')
+                return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua pergunta não foi salva. Avise a equipe do app, por favor.', 4000)
@@ -173,6 +181,8 @@ const store = new Vuex.Store({
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Pergunta deletada com sucesso!', 4000)
+                dispatch('getFaq')
+                return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua pergunta não foi deletada. Avise a equipe do app, por favor.', 4000)
