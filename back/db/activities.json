@@ -2,7 +2,7 @@
     {
         "id": 1,
         "title": "Credenciamento",
-        "hourStart": "9h",
+        "hourStart": "8h",
         "hourEnd": "16h30",
         "type": "morning",
         "date": "Dia 15",

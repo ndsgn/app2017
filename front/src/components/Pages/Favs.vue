@@ -2,27 +2,22 @@
   <div class="container">
     <div class="tab-container col s12 m7">
 
-        <div 
-            v-for="programItem in programItems" 
-            v-if="activeProgramTab == programItem.tabId" 
-            :key="programItem.tabId"  
-            class="col s12 tabsingle">
+        <div class="col s12 tabsingle">
             
-            <div 
-                v-for="programHours in programItem.hours" 
-                :key="programHours.hour">
+            <!-- pega da array de horários em `hours` 
+            e pra cada horário mostra as aticidades daquele horário -->
+            <div v-for="(hour, index) in hours" :key="index">
 
                 <CollectionTime 
-                    v-if="shouldShowHourLabel(programHours.activities)" 
-                    :hour="programHours.hour">
+                    :hour="hour">
                 </CollectionTime>
 
                 <ul class="collection">
                     <CollectionItem  
-                        v-for="programActivity in programHours.activities" 
-                        v-if="favItems.indexOf(programActivity.id) > -1" 
-                        :programActivity="programActivity" 
-                        :key="programActivity.id" >
+                        v-for="activity in tabActivities" 
+                        v-if="favItems.indexOf(activity.id) > -1 && activity.hourStart == hour" 
+                        :key="activity.id"  
+                        :programActivity="activity">
                     </CollectionItem>
                 </ul>
 
@@ -46,31 +41,31 @@ export default {
         return {
         }
     },
-    methods: {
-        shouldShowHourLabel: function(hourActivities) {
-            let shouldShow = false
-
-            //verifica se quaisquer das atividades está favoritada. Se sim, shouldShow vira true, e o horário vai aparecer
-            for (let activity of hourActivities) {
-                (this.favItems.indexOf(activity.id) > -1) ? shouldShow = true : shouldShow = false
-            }
-
-            return shouldShow
-        }
-    },
+    methods: {},
     computed: {
         favItems() {
             return this.$store.state.fav;
         },
-        programItems() {
-            return this.$store.state.program;
-        },
         activeProgramTab() {
-            return this.$store.state.activeProgramTab;
+            return this.$store.state.activeProgramTab
+        },
+        activities() {
+            return this.$store.state.activities
+        },
+        tabActivities() {
+            //returns only activities from that tab and that is on faved
+            return this.$store.state.activities.filter(activity => activity.date == this.activeProgramTab && this.favItems.indexOf(activity.id) > -1)
+        },
+        hours() {
+            let hours = []
+            this.tabActivities.forEach(function(item){
+                hours.indexOf(item.hourStart) > -1 ? false : hours.push(item.hourStart)
+            })
+            return hours
         }
     },
     created() {
-        this.$store.dispatch('getProgram');
+        this.$store.dispatch('getActivities');
         this.$store.dispatch('equalize_fav');
     }
 }

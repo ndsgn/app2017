@@ -14,25 +14,22 @@
             <Activity v-if="showActivity"></Activity>
         </transition>
 
-        <div 
-            v-for="programItem in programItems" 
-            v-if="activeProgramTab == programItem.tabId" 
-            :key="programItem.tabId"  
-            class="col s12 tabsingle">
-            
-            <div 
-                v-for="programHours in programItem.hours" 
-                :key="programHours.hour">
+        <div class="col s12 tabsingle">   
+
+            <!-- pega da array de horários em `hours` 
+            e pra cada horário mostra as aticidades daquele horário -->
+            <div v-for="(hour, index) in hours" :key="index">
                 
                 <CollectionTime 
-                    :hour="programHours.hour">
+                    :hour="hour">
                 </CollectionTime>
-                
+
                 <ul class="collection">
                     <CollectionItem  
-                        v-for="programActivity in programHours.activities" 
-                        :programActivity="programActivity" 
-                        :key="programActivity.id" >
+                        v-for="activity in tabActivities" 
+                        v-if="activity.hourStart == hour" 
+                        :key="activity.id"  
+                        :programActivity="activity">
                     </CollectionItem>
                 </ul>
 
@@ -75,18 +72,27 @@ export default {
         }
     },
     computed: {
-        programItems() {
-            return this.$store.state.program
-        },
         activeProgramTab() {
             return this.$store.state.activeProgramTab
+        },
+        activities() {
+            return this.$store.state.activities
+        },
+        tabActivities() {
+            return this.$store.state.activities.filter(activity => activity.date == this.activeProgramTab)
+        },
+        hours() {
+            let hours = []
+            this.tabActivities.forEach(function(item){
+                hours.indexOf(item.hourStart) > -1 ? false : hours.push(item.hourStart)
+            })
+            return hours
         },
         showActivity() {
             return (this.$route.params && this.$route.params.id) ? true : false
         }
     },
     created() {
-        this.$store.dispatch('getProgram');
         this.$store.dispatch('getActivities');
         this.$store.dispatch('equalize_fav');
         this.admin = this.$store.state.isAdmin;

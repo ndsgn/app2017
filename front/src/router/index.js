@@ -169,22 +169,19 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
     
+    var stateEmail = store.state.useremail? store.state.useremail : '' 
+    var localEmail = localStorage.useremail? localStorage.useremail : ''
+
     //se for pro login, não verifica nada
     if(to.name == 'Login') {
-      next()
+      localEmail != '' ? next({ path: '/program'}) : next()
     } else {
-      var stateEmail = store.state.useremail? store.state.useremail : '' 
-      var localEmail = localStorage.useremail? localStorage.useremail : ''
-
       if (!stateEmail) {
-        console.log('não tem stateEmail')
-
         localEmail && localEmail!= '' ? store.commit('GET_USER', localEmail) : next({ path: '/' })
         localStorage.isAdmin && localStorage.useremail != '' ? store.commit('SET_ADMIN', localStorage.isAdmin) : ''
         next()
 
       } else {
-        console.log('tem state email, segue a vida')
         next()
       }
     }
