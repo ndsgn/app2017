@@ -13,11 +13,16 @@
                         <label class="active" for="title">Título da atividade</label>
                     </div>
 
-                    <div class="input-field col s6">
+                    <div class="input-field col s4">
+                        <input id="date" ref="date" v-model="activity.date" name="date" type="text" @change="saveChange">
+                        <label class="active" for="date">Inicio</label>
+                    </div>
+
+                    <div class="input-field col s4">
                         <input id="hourStart" ref="hourStart" v-model="activity.hourStart" name="hourStart" type="text" @change="saveChange">
                         <label class="active" for="hourStart">Inicio</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s4">
                         <input id="hourEnd" ref="hourEnd" v-model="activity.hourEnd" name="hourEnd" type="text" @change="saveChange">
                         <label class="active" for="hourEnd">Termino</label>
                     </div>
@@ -37,6 +42,11 @@
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" @change="saveChange">
                         </div>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input id="type" ref="type" v-model="activity.type" name="type" type="text" @change="saveChange">
+                        <label class="active" for="type">Tipo</label>
                     </div>
 
                     <div class="input-field col s12">
@@ -70,9 +80,11 @@ export default {
             activity: {
                 id: '',
                 title: '',
+                date: '',
                 hourStart: '',
                 hourEnd: '',
                 place: '',
+                type: '',
                 image: '',
                 description: '',
                 speakers: ''
@@ -95,34 +107,39 @@ export default {
             this.$emit('closeModal')
         },
         submitForm: function() {
-            $('#editActivity').submit();
+            $('#editActivity').submit()
         },
         editActivity: function() {
-            this.save_data.id = this.mode == 'adding' ? 0 : this.activity.id;
-            // Remove fallbacks when date and type have their own fields.
-            this.save_data.date = this.activity.date ? this.activity.date : "Dia 15";
-            this.save_data.type = this.activity.type ? this.activity.type : "special";
-
-            this.$store.dispatch('editActivity', this.save_data);
+            const that = this
+            this.save_data.id = this.mode == 'adding' ? 0 : this.activity.id
+            this.$store.dispatch('editActivity', this.save_data)
+                .then(function(response) {
+                    if (response) {
+                        that.closeModal()
+                    }
+                })
+                .catch(function(error) {
+                    Materialize.toast('Não conseguimos nos comunicar com o servidor, avise por favor a equipe do app.', 4000)
+                });
         },
         onFileChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
+            var files = e.target.files || e.dataTransfer.files
             if (!files.length)
                 return;
-            this.createImage(files[0]);
+            this.createImage(files[0])
         },
         createImage(file) {
-            var image = new Image();
-            var reader = new FileReader();
-            var that = this;
+            var image = new Image()
+            var reader = new FileReader()
+            var that = this
             reader.onload = (e) => {
-                that.save_data.image = e.target.result;
+                that.save_data.image = e.target.result
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file)
         },
         saveChange(e) {
-            var ref = e.target.id;
-            this.save_data[ref] = e.target.value;
+            var ref = e.target.id
+            this.save_data[ref] = e.target.value
         }
     },
     mounted: function() {
