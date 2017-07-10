@@ -33,12 +33,10 @@ const store = new Vuex.Store({
             state.activities = payload
         },
         GET_USER: function (state, payload) {
-            console.log(payload)
             localStorage.setItem("useremail", payload)
             state.useremail = payload
         },
         SET_ADMIN: function(state, payload) {
-            console.log(payload);
             state.isAdmin = payload;
             localStorage.setItem("isAdmin", payload);
         },
@@ -119,7 +117,8 @@ const store = new Vuex.Store({
             })
         },
 
-        editActivity: function(context, data) {            
+        editActivity: function(context, data) {  
+            data.admin_hash = localStorage.isAdmin;          
             return Axios.post(API_URL + "/edit_activity/" + data.id, data)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
@@ -131,6 +130,7 @@ const store = new Vuex.Store({
         },
 
         deleteActivity: function(context, data) {
+            data.admin_hash = localStorage.isAdmin;
             Axios.post(API_URL + "/delete_activity/" + data.id, data)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
@@ -156,6 +156,7 @@ const store = new Vuex.Store({
         },
 
         editFaq: function(context, data) {
+            data.admin_hash = localStorage.isAdmin;
             Axios.post(API_URL + "/edit_faq/" + data.id, data)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
@@ -167,6 +168,7 @@ const store = new Vuex.Store({
         },
 
         deleteFaq: function(context, data) {
+            data.admin_hash = localStorage.isAdmin;
             Axios.post(API_URL + "/delete_faq/" + data.id, data)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
@@ -191,14 +193,15 @@ const store = new Vuex.Store({
                 var r = response.data[0]['Action'];
                 if (r == "Redir" || r == "Redir_Admin") {
                     context.commit('GET_USER', data["email"])
-                    r == "Redir_Admin" ? context.commit('SET_ADMIN', true) : context.commit('SET_ADMIN', false)
+                    r == "Redir_Admin" ? context.commit('SET_ADMIN', response.data[0]['Admin_Hash']) : context.commit('SET_ADMIN', false)
                     return true;
                 }
                 return false;
             }).catch(e => {
                 if(localStorage && localStorage.useremail) {
                     var useremail = localStorage.useremail
-                    localStorage.isAdmin == true ? context.commit('SET_ADMIN', true) : context.commit('SET_ADMIN', false)
+                    var admin_hash = localStorage.isAdmin
+                    localStorage.isAdmin == true ? context.commit('SET_ADMIN', admin_hash) : context.commit('SET_ADMIN', false)
                     context.commit('GET_USER', useremail)
                     return true
                 }
