@@ -11,9 +11,8 @@ const store = new Vuex.Store({
 
     state: {
         useremail: '',
-        activeProgramTab: 'tab1',
+        activeProgramTab: 'Dia 15',
         news: [],
-        program: [],
         faq: [],
         fav: [],
         activities: [],
@@ -26,9 +25,6 @@ const store = new Vuex.Store({
         },
         GET_NEWS: function (state, payload) {
             state.news = payload
-        },
-        GET_PROGRAM: function (state, payload) {
-            state.program = payload
         },
         GET_FAQ: function (state, payload) {
             state.faq = payload
@@ -87,23 +83,6 @@ const store = new Vuex.Store({
                 if(localStorage && localStorage.news) {
                     var news = JSON.parse(localStorage.news)
                     context.commit('GET_NEWS', news)
-                }
-            })
-        },
-
-        getProgram: function(context) {
-            Axios.get(API_URL + "/db/program.json")
-            .then(response => {
-                const program = response.data
-                // se rolou a chamada, atualiza no localStorage
-                localStorage.setItem("program", JSON.stringify(program))
-                context.commit('GET_PROGRAM', program)
-
-            }).catch(e => {
-                // se não rolou, mostra o que tem no localhost, desde que ele exista
-                if(localStorage && localStorage.program) {
-                    var program = JSON.parse(localStorage.program)
-                    context.commit('GET_PROGRAM', program)
                 }
             })
         },
