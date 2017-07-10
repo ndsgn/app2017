@@ -62,7 +62,6 @@
           senha: password
         }).then(function(response) {
           if (response) {
-            console.log(response)
             that.$router.push('News'); 
           } else {
             // Error handling.
@@ -71,11 +70,6 @@
         .catch(function(error) {
           // Error handling.
         });
-      }
-    },
-    methods:{
-      goTo: function() {
-        this.$router.push('News');
       }
     }
   }

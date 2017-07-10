@@ -9,7 +9,6 @@ var API_URL = 'https://localhost:5000/api';
 const store = new Vuex.Store({
 
     state: {
-        username: '',
         useremail: '',
         activeProgramTab: 'tab1',
         news: [],
@@ -17,7 +16,7 @@ const store = new Vuex.Store({
         faq: [],
         fav: [],
         activities: [],
-        isAdmin: true
+        isAdmin: false
     },
 
     mutations: {
@@ -31,7 +30,6 @@ const store = new Vuex.Store({
             state.program = payload
         },
         GET_FAQ: function (state, payload) {
-            console.log(payload)
             state.faq = payload
         },
         GET_ACTIVITIES: function (state, payload) {
@@ -39,6 +37,9 @@ const store = new Vuex.Store({
         },
         GET_USER: function (state, payload) {
             state.useremail = payload
+        },
+        SET_ADMIN: function(state, payload) {
+            state.isAdmin = payload;
         },
         EQUALIZE_FAV: function(state) {
             if(localStorage && localStorage.fav) {
@@ -186,11 +187,16 @@ const store = new Vuex.Store({
 
             return Axios.post(API_URL + '/login', data)
             .then(response => {
-                // If r is 'Error' the login has failed, else, it's all good.
                 var r = response.data[0]['Action'];
-                if (r != 'Error') {
+                if (r == "Redir" || r == "Redir_Admin") {
                     localStorage.setItem("useremail", data["email"]);
                     context.commit('GET_USER', data["email"]);
+                    if (r == "Redir_Admin") {
+                        localStorage.setItem("isAdmin", true);
+                        context.commit('SET_ADMIN', true);
+                    } else {
+                        localStorage.setItem("isAdmin", false);
+                    }
                     return true;
                 }
                 return false;

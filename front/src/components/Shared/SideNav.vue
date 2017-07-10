@@ -2,7 +2,7 @@
     <ul id="slide-out" class="side-nav">
         <li>
             <div class="userView grey lighten-2">
-                <p class="userinfo grey-text text-darken-3"><strong>{{username}}</strong><br>{{useremail}}</p>
+                <p class="userinfo grey-text text-darken-3">{{useremail}}</p>
                 <button v-on:click="logout()" class="waves-effect waves-light btn-flat grey lighten-1 grey-text text-darken-4">SAIR</button>
             </div>
         </li>
