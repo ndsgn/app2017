@@ -70,7 +70,7 @@ const store = new Vuex.Store({
         },
 
         getNews: function(context) {
-            Axios.get(`/static/news.json`)
+            Axios.get(API_URL + "/db/news.json")
             .then(response => {
                 const news = response.data
                 // se rolou a chamada, atualiza no localStorage
@@ -88,7 +88,7 @@ const store = new Vuex.Store({
 
         getProgram: function(context) {
 
-            Axios.get(`/static/program.json`)
+            Axios.get(API_URL + "/db/program.json")
             .then(response => {
                 const program = response.data
                 // se rolou a chamada, atualiza no localStorage
@@ -122,7 +122,7 @@ const store = new Vuex.Store({
 
         getActivities: function(context) {
 
-            Axios.get(`/static/activities.json`)
+            Axios.get(API_URL + "/db/activities.json")
             .then(response => {
                 const activities = response.data
                 // se rolou a chamada, atualiza no localStorage
@@ -169,7 +169,7 @@ const store = new Vuex.Store({
 
         getFaq: function(context) {
 
-            Axios.get(`/static/faq.json`)
+            Axios.get(API_URL + "/db/faq.json")
             .then(response => {
                 const faq = response.data
                 localStorage.setItem("faq", JSON.stringify(faq))

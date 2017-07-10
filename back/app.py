@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS, cross_origin
 from OpenSSL import SSL
 from admin import *
@@ -8,6 +8,11 @@ context = SSL.Context(SSL.SSLv23_METHOD)
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+app.config['DB_FOLDER'] = 'db/'
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
+
 
 # Code slightly modified from https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
 # The backend will be independent from the frontend.
@@ -24,6 +29,11 @@ def login():
     else:
         login_request = requests.post('http://inscricoes.ncuritiba2017.com.br/login', data = request.data)
         return login_request._content
+
+@app.route('/api/db/<path:filename>')
+def serve_db(filename):
+    print(filename)
+    return send_from_directory(app.config['DB_FOLDER'], filename)
 
 if __name__ == '__main__':
     context = ('ssl.crt', 'ssl.key')
