@@ -7,6 +7,7 @@ import re
 import cStringIO
 import json
 import os
+import uuid
 
 context = SSL.Context(SSL.SSLv23_METHOD)
 
@@ -204,7 +205,99 @@ def delete_activity(activity_id):
         json.dump(db_data, program)
 
     return 'Deleted Successfully!'
-    
+
+@app.route('/api/edit_faq/<faq_id>', methods=['POST'])
+def edit_faq(faq_id):
+    data = json.loads(request.data)
+    print(data)
+  
+    with open('db/faq.json', 'r') as faq:
+        db_data = json.load(faq)
+
+    # Find right group FAQ.
+    aux1 = 0
+    for i in db_data:
+        if i['group'] == str(data['group']):
+            break
+        aux1 = aux1 + 1
+
+    # Find right ID FAQ.
+    aux2 = 0
+    for i in db_data[aux1]['group_content']:
+        if i['item_id'] == faq_id:
+            break
+        aux2 = aux2 + 1
+
+    if data['mode'] == 'adding':
+        db_data[aux1]['group_content'].append({})
+        faq_id = uuid.uuid4()
+
+    db_data[aux1]['group_content'][aux2] = ({
+            "item_id": str(faq_id),
+            "item_title": data['item_title'],
+            "item_content": data['item_content']
+        })
+
+    # Delete previous question if group changed.
+    if data['group'] != data['previousGroup'] and data['previousGroup'] != 0:
+
+        # Find right group FAQ.
+        aux1 = 0
+        for i in db_data:
+            if i['group'] == str(data['previousGroup']):
+                break
+            aux1 = aux1 + 1
+
+        # Find right ID FAQ.
+        aux2 = 0
+        found = False
+        for i in db_data[aux1]['group_content']:
+            if i['item_id'] == str(data['id']):
+                found = True
+                break
+            aux2 = aux2 + 1
+
+        del db_data[aux1]['group_content'][aux2]
+
+    # Save to JSON.
+    with open('db/faq.json', 'w') as faq:
+        json.dump(db_data, faq)
+
+    return 'Done.'
+
+@app.route('/api/delete_faq/<faq_id>', methods=['POST'])
+def delete_faq(faq_id):
+    data = json.loads(request.data)
+
+    print(data)
+
+    with open('db/faq.json', 'r') as faq:
+        db_data = json.load(faq)
+
+    # Find right group FAQ.
+    aux1 = 0
+    for i in db_data:
+        if i['group'] == str(data['group']):
+            break
+        aux1 = aux1 + 1
+
+    # Find right ID FAQ.
+    aux2 = 0
+    found = False
+    for i in db_data[aux1]['group_content']:
+        if i['item_id'] == str(data['id']):
+            found = True
+            break
+        aux2 = aux2 + 1
+
+    if found:
+        del db_data[aux1]['group_content'][aux2]
+
+    # Save to JSON.
+    with open('db/faq.json', 'w') as faq:
+        json.dump(db_data, faq)
+
+    return 'Successfully deleted.'
 
 if __name__ == '__main__':
     context = ('ssl.crt', 'ssl.key')

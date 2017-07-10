@@ -9,12 +9,12 @@
                     <input type="hidden" name="activityId" v-model="faq.id" id="activityId" :value="faqId" >
 
                     <div class="input-field col s12">
-                        <input id="title" name="title" type="text" v-model="faq.title">
+                        <input id="title" ref="item_title" name="title" type="text" v-model="faq.title">
                         <label class="active" for="title">Título da pergunta</label>
                     </div>
 
                     <div class="input-field col s12">
-                        <select id="minutes" v-model="faq.group" name="minutes">
+                        <select id="group" ref="group" v-model="faq.group" name="group">
                             <option value="" disabled>Escolha um dos grupos</option>
                             <option v-for="item in group" :key="item.group" :value="item.group">{{item.group_title}}</option>
                         </select>
@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="input-field col s12">
-                        <textarea id="description" v-model="faq.content" name="description" class="materialize-textarea" data-length="120"></textarea>
+                        <textarea id="description" ref="item_content" v-model="faq.content" name="description" class="materialize-textarea" data-length="120"></textarea>
                         <label class="active" for="description">Descrição</label>
                     </div>
 
@@ -50,12 +50,12 @@ export default {
                 title: '',
                 group: '',
                 content: ''
-            }
+            },
+            save_data: {}
         }
     },
     computed: {
         words() {
-            console.log(this.content);
             (this.content && this.content != '') ? this.faq = this.content : ''
             return this.mode == 'adding' ? 'Adicionar' : 'Editar'
         },
@@ -67,11 +67,17 @@ export default {
         closeModal: function() {
             this.$emit('closeModal')
         },
-        editActivity: function() {
-            this.$store.dispatch('editFaq', this.activity);
+        editFaq: function() {
+            this.save_data.id = this.mode == 'adding' ? 0 : this.faq.id;
+            this.save_data.item_title = this.$refs.item_title.value;
+            this.save_data.item_content = this.$refs.item_content.value;
+            this.save_data.group = this.$refs.group.options.selectedIndex;
+            this.save_data.mode = this.mode
+            this.$store.dispatch('editFaq', this.save_data);
         }
     },
     mounted: function() {
+        this.save_data.previousGroup = this.$refs.group.options.selectedIndex;
         $(document).ready(function() {
             $('select').material_select();
         });
