@@ -45,7 +45,6 @@ def serve_images(filename):
 @app.route('/api/edit_activity/<int:activity_id>', methods=['POST'])
 def edit_activity(activity_id):
     data = json.loads(request.data)
-    print(data)
 
     if 'image' in data: 
         image_data = re.sub('^data:image/.+;base64,', '', data['image']).decode('base64')
@@ -58,10 +57,16 @@ def edit_activity(activity_id):
         db_data = json.load(activities)
 
     index = 0
+    found = False
     for i in db_data:
         if i['id'] == activity_id:
+            found = True
             break
         index = index + 1
+
+    if not found:
+        db_data.append({})
+        data['id'] = index
 
     for key, value in data.items():
         db_data[index][key] = value
@@ -69,6 +74,9 @@ def edit_activity(activity_id):
     with open('db/activities.json', 'w') as activities:
         json.dump(db_data, activities)
 
+    #####
+    # Remove this when program.json no longer needed.
+    #####
     if 'hourStart' in data:
 
         with open('db/program.json', 'r') as program:
@@ -80,7 +88,6 @@ def edit_activity(activity_id):
             if i['date'] == data['date']:
                 break
             aux1 = aux1 + 1
-        db_date = db_data[aux1]['hours']
 
         # Check if hour already exists.
         aux2 = 0
@@ -116,25 +123,87 @@ def edit_activity(activity_id):
             })
 
         # Remove previous entry.
-        aux3 = 0;
+        aux3 = 0
+        found = False
         for i in db_data[aux1]['hours']:
             if i['hour'] == data['previousHourStart']:
+                found = True
                 break
             aux3 = aux3 + 1
 
-        aux4 = 0;
-        for i in db_data[aux1]['hours'][aux3]['activities']:
-            if i['id'] == data['id']:
-                break
-            aux4 = aux4 + 1
+        if found:
+            aux4 = 0
+            found = False
+            for i in db_data[aux1]['hours'][aux3]['activities']:
+                if i['id'] == data['id']:
+                    found = True
+                    break
+                aux4 = aux4 + 1
 
-        del db_data[aux1]['hours'][aux3]['activities'][aux4]
+            if found:
+                del db_data[aux1]['hours'][aux3]['activities'][aux4]
 
         # Save to JSON.
         with open('db/program.json', 'w') as program:
             json.dump(db_data, program)
 
-    return 'Done'
+    return 'Done.'
+
+@app.route('/api/delete_activity/<int:activity_id>', methods=['POST'])
+def delete_activity(activity_id):
+    data = json.loads(request.data)
+
+    with open('db/activities.json', 'r') as activities:
+        db_data = json.load(activities)
+
+    index = 0
+    found = False
+    for i in db_data:
+        if i['id'] == activity_id:
+            found = True
+            break
+        index = index + 1
+
+    if found:
+        del db_data[index]
+
+    with open('db/activities.json', 'w') as activities:
+        json.dump(db_data, activities)
+
+    #####
+    # Remove this when program.json no longer needed.
+    #####
+
+    with open('db/program.json', 'r') as program:
+        db_data = json.load(program)
+
+    # Find right date JSON.
+    aux1 = 0
+    for i in db_data:
+        if i['date'] == data['date']:
+            break
+        aux1 = aux1 + 1
+
+    # Remove previous entry.
+    aux2 = 0;
+    for i in db_data[aux1]['hours']:
+        if i['hour'] == data['hourStart']:
+            break
+        aux2 = aux2 + 1
+
+    aux3 = 0
+    for i in db_data[aux1]['hours'][aux2]['activities']:
+        if i['id'] == data['id']:
+            break
+        aux3 = aux3 + 1
+
+    del db_data[aux1]['hours'][aux2]['activities'][aux3]
+
+    # Save to JSON.
+    with open('db/program.json', 'w') as program:
+        json.dump(db_data, program)
+
+    return 'Deleted Successfully!'
     
 
 if __name__ == '__main__':

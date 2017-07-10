@@ -151,8 +151,8 @@ const store = new Vuex.Store({
             })
         },
 
-        deleteActivity: function(context, activityId) {
-            Axios.post(`APIURL`)
+        deleteActivity: function(context, data) {
+            Axios.post(API_URL + "/delete_activity/" + data.id, data)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Atividade removida com sucesso!', 4000)

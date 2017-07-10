@@ -119,7 +119,7 @@ export default {
             this.showModal = !this.showModal;
         },
         deleteActivity: function() {
-            this.$store.dispatch('deleteActivity', this.activityId);
+            this.$store.dispatch('deleteActivity', this.activity);
         }
     },
     created() {
