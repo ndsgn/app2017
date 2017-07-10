@@ -1,11 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from OpenSSL import SSL
+from admin import *
 import requests
 
 context = SSL.Context(SSL.SSLv23_METHOD)
-context.use_privatekey_file('ssl.key')
-context.use_certificate_file('ssl.crt')
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -14,9 +13,17 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 # The backend will be independent from the frontend.
 # Flask will help us with building a REST API for the front-end.
 @app.route('/api/login', methods=['POST'])
-def login():    
-    login_request = requests.post('http://inscricoes.ncuritiba2017.com.br/login', data = request.data)
-    return login_request._content
+def login(): 
+    is_admin = False
+    for admin in ADMIN_USERS:   
+        if request.data == admin:
+            is_admin = True
+
+    if is_admin:
+        return ADMIN_RESPONSE
+    else:
+        login_request = requests.post('http://inscricoes.ncuritiba2017.com.br/login', data = request.data)
+        return login_request._content
 
 if __name__ == '__main__':
     context = ('ssl.crt', 'ssl.key')
