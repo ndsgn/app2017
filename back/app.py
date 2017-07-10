@@ -4,6 +4,7 @@ from OpenSSL import SSL
 from admin import *
 from PIL import Image
 import requests
+import re
 import cStringIO
 import json
 import os
@@ -44,7 +45,7 @@ def serve_db(filename):
 def serve_images(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route('/api/edit_activity/<int:activity_id>', methods=['POST'])
+@app.route('/api/edit_activity/<activity_id>', methods=['POST'])
 def edit_activity(activity_id):
     data = json.loads(request.data)
     if data['admin_hash'] == ADMIN_HASH:
@@ -62,93 +63,21 @@ def edit_activity(activity_id):
         index = 0
         found = False
         for i in db_data:
-            if i['id'] == activity_id:
+            if i['id'] == int(activity_id):
                 found = True
                 break
             index = index + 1
 
         if not found:
             db_data.append({})
-            data['id'] = index
+            activity_id = uuid.uuid4()
+            data['id'] = str(uuid.uuid4())
 
         for key, value in data.items():
             db_data[index][key] = value
 
         with open('db/activities.json', 'w') as activities:
             json.dump(db_data, activities)
-
-        #####
-        # Remove this when program.json no longer needed.
-        #####
-        if 'hourStart' in data:
-
-            with open('db/program.json', 'r') as program:
-                db_data = json.load(program)
-
-            # Find right date JSON.
-            aux1 = 0
-            for i in db_data:
-                if i['date'] == data['date']:
-                    break
-                aux1 = aux1 + 1
-
-            # Check if hour already exists.
-            aux2 = 0
-            found = False
-            for i in db_data[aux1]['hours']:
-                if i['hour'] == data['hourStart']:
-                    found = True
-                    break
-                aux2 = aux2 + 1
-
-            if found:
-                # If hour already exists, just add the new activity.
-                db_data[aux1]['hours'][aux2]['activities'].append({
-                            "id": data['id'],
-                            "title": data['title'],
-                            "hourStart": data['hourStart'],
-                            "hourEnd": data['hourEnd'],
-                            "type": data['type']
-                        })
-            else:
-                # If it doesn't, create new hour as well as new activity.
-                db_data[aux1]['hours'].append({
-                    "hour": data['hourStart'],
-                    "activities": [
-                        {
-                            "id": data['id'],
-                            "title": data['title'],
-                            "hourStart": data['hourStart'],
-                            "hourEnd": data['hourEnd'],
-                            "type": data['type']
-                        }
-                    ]
-                })
-
-            # Remove previous entry.
-            aux3 = 0
-            found = False
-            for i in db_data[aux1]['hours']:
-                if i['hour'] == data['previousHourStart']:
-                    found = True
-                    break
-                aux3 = aux3 + 1
-
-            if found:
-                aux4 = 0
-                found = False
-                for i in db_data[aux1]['hours'][aux3]['activities']:
-                    if i['id'] == data['id']:
-                        found = True
-                        break
-                    aux4 = aux4 + 1
-
-                if found:
-                    del db_data[aux1]['hours'][aux3]['activities'][aux4]
-
-            # Save to JSON.
-            with open('db/program.json', 'w') as program:
-                json.dump(db_data, program)
 
         return 'Done.'
 
@@ -178,39 +107,6 @@ def delete_activity(activity_id):
 
         with open('db/activities.json', 'w') as activities:
             json.dump(db_data, activities)
-
-        #####
-        # Remove this when program.json no longer needed.
-        #####
-
-        with open('db/program.json', 'r') as program:
-            db_data = json.load(program)
-
-        # Find right date JSON.
-        aux1 = 0
-        for i in db_data:
-            if i['date'] == data['date']:
-                break
-            aux1 = aux1 + 1
-
-        # Remove previous entry.
-        aux2 = 0;
-        for i in db_data[aux1]['hours']:
-            if i['hour'] == data['hourStart']:
-                break
-            aux2 = aux2 + 1
-
-        aux3 = 0
-        for i in db_data[aux1]['hours'][aux2]['activities']:
-            if i['id'] == data['id']:
-                break
-            aux3 = aux3 + 1
-
-        del db_data[aux1]['hours'][aux2]['activities'][aux3]
-
-        # Save to JSON.
-        with open('db/program.json', 'w') as program:
-            json.dump(db_data, program)
 
         return 'Deleted Successfully!'
 
