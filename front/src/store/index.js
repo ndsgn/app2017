@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Router from '../router'
 import Axios from 'axios'
 
 Vue.use(Vuex)
@@ -9,7 +10,6 @@ var API_URL = 'https://localhost:5000/api';
 const store = new Vuex.Store({
 
     state: {
-        username: '',
         useremail: '',
         activeProgramTab: 'tab1',
         news: [],
@@ -17,7 +17,7 @@ const store = new Vuex.Store({
         faq: [],
         fav: [],
         activities: [],
-        isAdmin: true
+        isAdmin: false
     },
 
     mutations: {
@@ -31,14 +31,20 @@ const store = new Vuex.Store({
             state.program = payload
         },
         GET_FAQ: function (state, payload) {
-            console.log(payload)
             state.faq = payload
         },
         GET_ACTIVITIES: function (state, payload) {
             state.activities = payload
         },
         GET_USER: function (state, payload) {
+            console.log(payload)
+            localStorage.setItem("useremail", payload)
             state.useremail = payload
+        },
+        SET_ADMIN: function(state, payload) {
+            console.log(payload);
+            state.isAdmin = payload;
+            localStorage.setItem("isAdmin", payload);
         },
         EQUALIZE_FAV: function(state) {
             if(localStorage && localStorage.fav) {
@@ -137,28 +143,6 @@ const store = new Vuex.Store({
             })
         },
 
-        getUser: function(context, data) {
-
-            return Axios.post(API_URL + '/login', data)
-            .then(response => {
-                // If r is 'Error' the login has failed, else, it's all good.
-                var r = response.data[0]['Action'];
-                if (r != 'Error') {
-                    localStorage.setItem("useremail", data["email"]);
-                    context.commit('GET_USER', data["email"]);
-                    return true;
-                }
-                return false;
-            }).catch(e => {
-                /*if(localStorage && localStorage.useremail) {
-                    var useremail = localStorage.useremail;
-                    context.commit('GET_ACTIVITIES', useremail);
-                    return true;
-                }*/
-                return false;
-            });
-        },
-
         editActivity: function(context, theActivity) {
             console.log('This is the post we will send to the endpoint of add/edit URL')
             console.log(theActivity)
@@ -203,6 +187,39 @@ const store = new Vuex.Store({
                 }
             })
         },
+
+        logout: function(context) {
+            localStorage.useremail = ''
+            localStorage.fav = []
+
+            context.commit('SET_ADMIN', false)
+            context.commit('GET_USER', '')
+            
+            Router.push('/')
+        },
+        
+        getUser: function(context, data) {
+
+            return Axios.post(API_URL + '/login', data)
+            .then(response => {
+                var r = response.data[0]['Action'];
+                if (r == "Redir" || r == "Redir_Admin") {
+                    context.commit('GET_USER', data["email"])
+
+                    r == "Redir_Admin" ? context.commit('SET_ADMIN', true) : context.commit('SET_ADMIN', false)
+                    return true;
+                }
+                return false;
+            }).catch(e => {
+                if(localStorage && localStorage.useremail) {
+                    var useremail = localStorage.useremail
+                    localStorage.isAdmin == true ? context.commit('SET_ADMIN', true) : context.commit('SET_ADMIN', false)
+                    context.commit('GET_USER', useremail)
+                    return true
+                }
+                return false;
+            });
+        }
     }
 })
 

@@ -25,15 +25,15 @@ export default {
     },
     methods: {
         logout: function() {
-            this.$router.push({ path: '/' })
+            this.$store.dispatch('logout');
         }
     },
     computed: {
         username() {
-            return this.$store.state.username;
+            return this.$store.state.username
         },
         useremail() {
-            return this.$store.state.useremail;
+            return this.$store.state.useremail
         }
     }
 }

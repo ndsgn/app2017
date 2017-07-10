@@ -37,6 +37,11 @@ source env/bin/activate
 cd back
 pip install -r requirements.txt
 
+# create fixture admin users for testing
+cp admin.example.py admin.py
+# add as many email and password for admin as needed,
+# by editing the newly created admin.py file
+
 # start local server localhost:5000
 python app.py
 
