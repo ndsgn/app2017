@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Router from '../router'
 import Axios from 'axios'
 
 Vue.use(Vuex)
@@ -36,10 +37,14 @@ const store = new Vuex.Store({
             state.activities = payload
         },
         GET_USER: function (state, payload) {
+            console.log(payload)
+            localStorage.setItem("useremail", payload)
             state.useremail = payload
         },
         SET_ADMIN: function(state, payload) {
+            console.log(payload);
             state.isAdmin = payload;
+            localStorage.setItem("isAdmin", payload);
         },
         EQUALIZE_FAV: function(state) {
             if(localStorage && localStorage.fav) {
@@ -137,7 +142,7 @@ const store = new Vuex.Store({
                 }
             })
         },
-      
+
         editActivity: function(context, theActivity) {
             console.log(theActivity)
 
@@ -181,29 +186,35 @@ const store = new Vuex.Store({
                 }
             })
         },
-      
+
+        logout: function(context) {
+            localStorage.useremail = ''
+            localStorage.fav = []
+
+            context.commit('SET_ADMIN', false)
+            context.commit('GET_USER', '')
+            
+            Router.push('/')
+        },
+        
         getUser: function(context, data) {
 
             return Axios.post(API_URL + '/login', data)
             .then(response => {
                 var r = response.data[0]['Action'];
                 if (r == "Redir" || r == "Redir_Admin") {
-                    localStorage.setItem("useremail", data["email"]);
-                    context.commit('GET_USER', data["email"]);
-                    if (r == "Redir_Admin") {
-                        localStorage.setItem("isAdmin", true);
-                        context.commit('SET_ADMIN', true);
-                    } else {
-                        localStorage.setItem("isAdmin", false);
-                    }
+                    context.commit('GET_USER', data["email"])
+
+                    r == "Redir_Admin" ? context.commit('SET_ADMIN', true) : context.commit('SET_ADMIN', false)
                     return true;
                 }
                 return false;
             }).catch(e => {
                 if(localStorage && localStorage.useremail) {
-                    var useremail = localStorage.useremail;
-                    context.commit('GET_ACTIVITIES', useremail);
-                    return true;
+                    var useremail = localStorage.useremail
+                    localStorage.isAdmin == true ? context.commit('SET_ADMIN', true) : context.commit('SET_ADMIN', false)
+                    context.commit('GET_USER', useremail)
+                    return true
                 }
                 return false;
             });

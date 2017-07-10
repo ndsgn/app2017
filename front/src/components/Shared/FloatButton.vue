@@ -28,6 +28,10 @@ export default {
 
 <style scoped lang="scss">
 
+    .fixed-action-btn {
+        z-index: 500 !important
+    }
+
     .btn-large {
         padding: 0 !important;
     }
