@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 from OpenSSL import SSL
 from admin import *
 from PIL import Image
-import re
+import requests
 import cStringIO
 import json
 import os
