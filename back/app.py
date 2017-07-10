@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 from OpenSSL import SSL
 from admin import *
 from PIL import Image
-import re
+import requests
 import cStringIO
 import json
 import os
@@ -30,6 +30,7 @@ def login():
             is_admin = True
 
     if is_admin:
+        print(ADMIN_RESPONSE)
         return ADMIN_RESPONSE
     else:
         login_request = requests.post('http://inscricoes.ncuritiba2017.com.br/login', data = request.data)
@@ -46,39 +47,141 @@ def serve_images(filename):
 @app.route('/api/edit_activity/<int:activity_id>', methods=['POST'])
 def edit_activity(activity_id):
     data = json.loads(request.data)
+    if data['admin_hash'] == ADMIN_HASH:
 
-    if 'image' in data: 
-        image_data = re.sub('^data:image/.+;base64,', '', data['image']).decode('base64')
-        image = Image.open(cStringIO.StringIO(image_data))
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], str(activity_id) + '.' + (image.format).lower())    
-        image.save(image_path, format=image.format)
-        data['image'] = app.config['BASE_URL'] + 'api/' + image_path
+        if 'image' in data: 
+            image_data = re.sub('^data:image/.+;base64,', '', data['image']).decode('base64')
+            image = Image.open(cStringIO.StringIO(image_data))
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], str(activity_id) + '.' + (image.format).lower())    
+            image.save(image_path, format=image.format)
+            data['image'] = app.config['BASE_URL'] + 'api/' + image_path
 
-    with open('db/activities.json', 'r') as activities:
-        db_data = json.load(activities)
+        with open('db/activities.json', 'r') as activities:
+            db_data = json.load(activities)
 
-    index = 0
-    found = False
-    for i in db_data:
-        if i['id'] == activity_id:
-            found = True
-            break
-        index = index + 1
+        index = 0
+        found = False
+        for i in db_data:
+            if i['id'] == activity_id:
+                found = True
+                break
+            index = index + 1
 
-    if not found:
-        db_data.append({})
-        data['id'] = index
+        if not found:
+            db_data.append({})
+            data['id'] = index
 
-    for key, value in data.items():
-        db_data[index][key] = value
+        for key, value in data.items():
+            db_data[index][key] = value
 
-    with open('db/activities.json', 'w') as activities:
-        json.dump(db_data, activities)
+        with open('db/activities.json', 'w') as activities:
+            json.dump(db_data, activities)
 
-    #####
-    # Remove this when program.json no longer needed.
-    #####
-    if 'hourStart' in data:
+        #####
+        # Remove this when program.json no longer needed.
+        #####
+        if 'hourStart' in data:
+
+            with open('db/program.json', 'r') as program:
+                db_data = json.load(program)
+
+            # Find right date JSON.
+            aux1 = 0
+            for i in db_data:
+                if i['date'] == data['date']:
+                    break
+                aux1 = aux1 + 1
+
+            # Check if hour already exists.
+            aux2 = 0
+            found = False
+            for i in db_data[aux1]['hours']:
+                if i['hour'] == data['hourStart']:
+                    found = True
+                    break
+                aux2 = aux2 + 1
+
+            if found:
+                # If hour already exists, just add the new activity.
+                db_data[aux1]['hours'][aux2]['activities'].append({
+                            "id": data['id'],
+                            "title": data['title'],
+                            "hourStart": data['hourStart'],
+                            "hourEnd": data['hourEnd'],
+                            "type": data['type']
+                        })
+            else:
+                # If it doesn't, create new hour as well as new activity.
+                db_data[aux1]['hours'].append({
+                    "hour": data['hourStart'],
+                    "activities": [
+                        {
+                            "id": data['id'],
+                            "title": data['title'],
+                            "hourStart": data['hourStart'],
+                            "hourEnd": data['hourEnd'],
+                            "type": data['type']
+                        }
+                    ]
+                })
+
+            # Remove previous entry.
+            aux3 = 0
+            found = False
+            for i in db_data[aux1]['hours']:
+                if i['hour'] == data['previousHourStart']:
+                    found = True
+                    break
+                aux3 = aux3 + 1
+
+            if found:
+                aux4 = 0
+                found = False
+                for i in db_data[aux1]['hours'][aux3]['activities']:
+                    if i['id'] == data['id']:
+                        found = True
+                        break
+                    aux4 = aux4 + 1
+
+                if found:
+                    del db_data[aux1]['hours'][aux3]['activities'][aux4]
+
+            # Save to JSON.
+            with open('db/program.json', 'w') as program:
+                json.dump(db_data, program)
+
+        return 'Done.'
+
+    else:
+
+        return Response('Bad credentials.', 401)
+
+@app.route('/api/delete_activity/<int:activity_id>', methods=['POST'])
+def delete_activity(activity_id):
+    data = json.loads(request.data)
+
+    if data['admin_hash'] == ADMIN_HASH:
+
+        with open('db/activities.json', 'r') as activities:
+            db_data = json.load(activities)
+
+        index = 0
+        found = False
+        for i in db_data:
+            if i['id'] == activity_id:
+                found = True
+                break
+            index = index + 1
+
+        if found:
+            del db_data[index]
+
+        with open('db/activities.json', 'w') as activities:
+            json.dump(db_data, activities)
+
+        #####
+        # Remove this when program.json no longer needed.
+        #####
 
         with open('db/program.json', 'r') as program:
             db_data = json.load(program)
@@ -90,161 +193,110 @@ def edit_activity(activity_id):
                 break
             aux1 = aux1 + 1
 
-        # Check if hour already exists.
-        aux2 = 0
-        found = False
+        # Remove previous entry.
+        aux2 = 0;
         for i in db_data[aux1]['hours']:
             if i['hour'] == data['hourStart']:
-                found = True
                 break
             aux2 = aux2 + 1
 
-        if found:
-            # If hour already exists, just add the new activity.
-            db_data[aux1]['hours'][aux2]['activities'].append({
-                        "id": data['id'],
-                        "title": data['title'],
-                        "hourStart": data['hourStart'],
-                        "hourEnd": data['hourEnd'],
-                        "type": data['type']
-                    })
-        else:
-            # If it doesn't, create new hour as well as new activity.
-            db_data[aux1]['hours'].append({
-                "hour": data['hourStart'],
-                "activities": [
-                    {
-                        "id": data['id'],
-                        "title": data['title'],
-                        "hourStart": data['hourStart'],
-                        "hourEnd": data['hourEnd'],
-                        "type": data['type']
-                    }
-                ]
-            })
-
-        # Remove previous entry.
         aux3 = 0
-        found = False
-        for i in db_data[aux1]['hours']:
-            if i['hour'] == data['previousHourStart']:
-                found = True
+        for i in db_data[aux1]['hours'][aux2]['activities']:
+            if i['id'] == data['id']:
                 break
             aux3 = aux3 + 1
 
-        if found:
-            aux4 = 0
-            found = False
-            for i in db_data[aux1]['hours'][aux3]['activities']:
-                if i['id'] == data['id']:
-                    found = True
-                    break
-                aux4 = aux4 + 1
-
-            if found:
-                del db_data[aux1]['hours'][aux3]['activities'][aux4]
+        del db_data[aux1]['hours'][aux2]['activities'][aux3]
 
         # Save to JSON.
         with open('db/program.json', 'w') as program:
             json.dump(db_data, program)
 
-    return 'Done.'
+        return 'Deleted Successfully!'
 
-@app.route('/api/delete_activity/<int:activity_id>', methods=['POST'])
-def delete_activity(activity_id):
-    data = json.loads(request.data)
+    else:
 
-    with open('db/activities.json', 'r') as activities:
-        db_data = json.load(activities)
+        return Response('Bad credentials.', 401)
 
-    index = 0
-    found = False
-    for i in db_data:
-        if i['id'] == activity_id:
-            found = True
-            break
-        index = index + 1
-
-    if found:
-        del db_data[index]
-
-    with open('db/activities.json', 'w') as activities:
-        json.dump(db_data, activities)
-
-    #####
-    # Remove this when program.json no longer needed.
-    #####
-
-    with open('db/program.json', 'r') as program:
-        db_data = json.load(program)
-
-    # Find right date JSON.
-    aux1 = 0
-    for i in db_data:
-        if i['date'] == data['date']:
-            break
-        aux1 = aux1 + 1
-
-    # Remove previous entry.
-    aux2 = 0;
-    for i in db_data[aux1]['hours']:
-        if i['hour'] == data['hourStart']:
-            break
-        aux2 = aux2 + 1
-
-    aux3 = 0
-    for i in db_data[aux1]['hours'][aux2]['activities']:
-        if i['id'] == data['id']:
-            break
-        aux3 = aux3 + 1
-
-    del db_data[aux1]['hours'][aux2]['activities'][aux3]
-
-    # Save to JSON.
-    with open('db/program.json', 'w') as program:
-        json.dump(db_data, program)
-
-    return 'Deleted Successfully!'
 
 @app.route('/api/edit_faq/<faq_id>', methods=['POST'])
 def edit_faq(faq_id):
     data = json.loads(request.data)
-    print(data)
-  
-    with open('db/faq.json', 'r') as faq:
-        db_data = json.load(faq)
-
-    # Find right group FAQ.
-    aux1 = 0
-    for i in db_data:
-        if i['group'] == str(data['group']):
-            break
-        aux1 = aux1 + 1
-
-    # Find right ID FAQ.
-    aux2 = 0
-    for i in db_data[aux1]['group_content']:
-        if i['item_id'] == faq_id:
-            break
-        aux2 = aux2 + 1
-
-    if data['mode'] == 'adding':
-        db_data[aux1]['group_content'].append({})
-        faq_id = uuid.uuid4()
-
-    db_data[aux1]['group_content'][aux2] = ({
-            "item_id": str(faq_id),
-            "item_title": data['item_title'],
-            "item_content": data['item_content']
-        })
-
-    # Delete previous question if group changed.
-    if data['group'] != data['previousGroup'] and data['previousGroup'] != 0:
+    
+    if data['admin_hash'] == ADMIN_HASH:
+      
+        with open('db/faq.json', 'r') as faq:
+            db_data = json.load(faq)
 
         # Find right group FAQ.
         aux1 = 0
         for i in db_data:
-            if i['group'] == str(data['previousGroup']):
+            if i['group'] == str(data['group']):
+                break
+            aux1 = aux1 + 1
+
+        # Find right ID FAQ.
+        aux2 = 0
+        for i in db_data[aux1]['group_content']:
+            if i['item_id'] == faq_id:
+                break
+            aux2 = aux2 + 1
+
+        if data['mode'] == 'adding':
+            db_data[aux1]['group_content'].append({})
+            faq_id = uuid.uuid4()
+
+        db_data[aux1]['group_content'][aux2] = ({
+                "item_id": str(faq_id),
+                "item_title": data['item_title'],
+                "item_content": data['item_content']
+            })
+
+        # Delete previous question if group changed.
+        if data['group'] != data['previousGroup'] and data['previousGroup'] != 0:
+
+            # Find right group FAQ.
+            aux1 = 0
+            for i in db_data:
+                if i['group'] == str(data['previousGroup']):
+                    break
+                aux1 = aux1 + 1
+
+            # Find right ID FAQ.
+            aux2 = 0
+            found = False
+            for i in db_data[aux1]['group_content']:
+                if i['item_id'] == str(data['id']):
+                    found = True
+                    break
+                aux2 = aux2 + 1
+
+            del db_data[aux1]['group_content'][aux2]
+
+        # Save to JSON.
+        with open('db/faq.json', 'w') as faq:
+            json.dump(db_data, faq)
+
+        return 'Done.'
+
+    else:
+
+        return Response('Bad credentials.', 401)
+
+
+@app.route('/api/delete_faq/<faq_id>', methods=['POST'])
+def delete_faq(faq_id):
+    data = json.loads(request.data)
+
+    if data['admin_hash'] == ADMIN_HASH:
+
+        with open('db/faq.json', 'r') as faq:
+            db_data = json.load(faq)
+
+        # Find right group FAQ.
+        aux1 = 0
+        for i in db_data:
+            if i['group'] == str(data['group']):
                 break
             aux1 = aux1 + 1
 
@@ -257,47 +309,18 @@ def edit_faq(faq_id):
                 break
             aux2 = aux2 + 1
 
-        del db_data[aux1]['group_content'][aux2]
+        if found:
+            del db_data[aux1]['group_content'][aux2]
 
-    # Save to JSON.
-    with open('db/faq.json', 'w') as faq:
-        json.dump(db_data, faq)
+        # Save to JSON.
+        with open('db/faq.json', 'w') as faq:
+            json.dump(db_data, faq)
 
-    return 'Done.'
+        return 'Successfully deleted.'
 
-@app.route('/api/delete_faq/<faq_id>', methods=['POST'])
-def delete_faq(faq_id):
-    data = json.loads(request.data)
+    else:
 
-    print(data)
-
-    with open('db/faq.json', 'r') as faq:
-        db_data = json.load(faq)
-
-    # Find right group FAQ.
-    aux1 = 0
-    for i in db_data:
-        if i['group'] == str(data['group']):
-            break
-        aux1 = aux1 + 1
-
-    # Find right ID FAQ.
-    aux2 = 0
-    found = False
-    for i in db_data[aux1]['group_content']:
-        if i['item_id'] == str(data['id']):
-            found = True
-            break
-        aux2 = aux2 + 1
-
-    if found:
-        del db_data[aux1]['group_content'][aux2]
-
-    # Save to JSON.
-    with open('db/faq.json', 'w') as faq:
-        json.dump(db_data, faq)
-
-    return 'Successfully deleted.'
+        return Response('Bad credentials.', 401)
 
 if __name__ == '__main__':
     context = ('ssl.crt', 'ssl.key')
