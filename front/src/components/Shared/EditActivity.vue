@@ -99,6 +99,10 @@ export default {
         },
         editActivity: function() {
             this.save_data.id = this.mode == 'adding' ? 0 : this.activity.id;
+            // Remove fallbacks when date and type have their own fields.
+            this.save_data.date = this.activity.date ? this.activity.date : "Dia 15";
+            this.save_data.type = this.activity.type ? this.activity.type : "special";
+
             this.$store.dispatch('editActivity', this.save_data);
         },
         onFileChange(e) {

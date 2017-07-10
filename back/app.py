@@ -4,6 +4,7 @@ from OpenSSL import SSL
 from admin import *
 from PIL import Image
 import requests
+import re
 import cStringIO
 import json
 import os
@@ -44,7 +45,7 @@ def serve_db(filename):
 def serve_images(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route('/api/edit_activity/<int:activity_id>', methods=['POST'])
+@app.route('/api/edit_activity/<activity_id>', methods=['POST'])
 def edit_activity(activity_id):
     data = json.loads(request.data)
     if data['admin_hash'] == ADMIN_HASH:
@@ -62,14 +63,15 @@ def edit_activity(activity_id):
         index = 0
         found = False
         for i in db_data:
-            if i['id'] == activity_id:
+            if i['id'] == int(activity_id):
                 found = True
                 break
             index = index + 1
 
         if not found:
             db_data.append({})
-            data['id'] = index
+            activity_id = uuid.uuid4()
+            data['id'] = str(uuid.uuid4())
 
         for key, value in data.items():
             db_data[index][key] = value
