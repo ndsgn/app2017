@@ -68,12 +68,24 @@ export default {
             this.$emit('closeModal')
         },
         editFaq: function() {
-            this.save_data.id = this.mode == 'adding' ? 0 : this.faq.id;
-            this.save_data.item_title = this.$refs.item_title.value;
-            this.save_data.item_content = this.$refs.item_content.value;
-            this.save_data.group = this.$refs.group.options.selectedIndex;
+            const that = this
+            
+            this.save_data.id = this.mode == 'adding' ? 0 : this.faq.id
+            this.save_data.item_title = this.$refs.item_title.value
+            this.save_data.item_content = this.$refs.item_content.value
+            this.save_data.group = this.$refs.group.options.selectedIndex
             this.save_data.mode = this.mode
-            this.$store.dispatch('editFaq', this.save_data);
+
+            this.$store.dispatch('editFaq', this.save_data)
+                .then(function(response) {
+                    console.log(response)
+                    if (response) {
+                        that.closeModal()
+                    }
+                })
+                .catch(function(error) {
+                    Materialize.toast('Não conseguimos nos comunicar com o servidor, avise por favor a equipe do app.', 4000)
+                })
         }
     },
     mounted: function() {
