@@ -163,11 +163,13 @@ const store = new Vuex.Store({
 
         editFaq: function(context, data) {
             data.admin_hash = localStorage.isAdmin;
-            Axios.post(API_URL + "/edit_faq/" + data.id, data)
+            return Axios.post(API_URL + "/edit_faq/" + data.id, data)
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Pergunta editada com sucesso!', 4000)
-                dispatch('getFaq')
+                console.log('foi1')
+                context.dispatch('getFaq')
+                console.log('foi2')
                 return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
@@ -181,7 +183,7 @@ const store = new Vuex.Store({
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Pergunta deletada com sucesso!', 4000)
-                dispatch('getFaq')
+                context.dispatch('getFaq')
                 return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista

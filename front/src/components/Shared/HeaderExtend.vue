@@ -7,6 +7,9 @@
             <li class="tab"><a v-bind:class="{ 'active': activeProgramTab == 'Dia 18'  }" v-on:click="activateTab('Dia 18')" >Dia 18<br><span>TER</span></a></li>
             <li class="tab"><a v-bind:class="{ 'active': activeProgramTab == 'Dia 19'  }" v-on:click="activateTab('Dia 19')" >Dia 19<br><span>QUA</span></a></li>
             <li class="tab"><a v-bind:class="{ 'active': activeProgramTab == 'Dia 20'  }" v-on:click="activateTab('Dia 20')" >Dia 20<br><span>QUI</span></a></li>
+            <li class="tab"><a v-bind:class="{ 'active': activeProgramTab == 'Dia 21'  }" v-on:click="activateTab('Dia 21')" >Dia 21<br><span>SEX</span></a></li>
+            <li class="tab"><a v-bind:class="{ 'active': activeProgramTab == 'Dia 22'  }" v-on:click="activateTab('Dia 22')" >Dia 22<br><span>SAB</span></a></li>
+            <li class="tab"><a v-bind:class="{ 'active': activeProgramTab == 'Dia 23'  }" v-on:click="activateTab('Dia 23')" >Dia 23<br><span>DOM</span></a></li>
         </ul>
     </div>
 </template>

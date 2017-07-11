@@ -86,7 +86,7 @@ export default {
             this.tabActivities.forEach(function(item){
                 hours.indexOf(item.hourStart) > -1 ? false : hours.push(item.hourStart)
             })
-            return hours
+            return hours.sort()
         },
         showActivity() {
             return (this.$route.params && this.$route.params.id) ? true : false

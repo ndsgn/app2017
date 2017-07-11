@@ -120,7 +120,7 @@ export default {
                 })
                 .catch(function(error) {
                     Materialize.toast('Não conseguimos nos comunicar com o servidor, avise por favor a equipe do app.', 4000)
-                });
+                })
         },
         onFileChange(e) {
             var files = e.target.files || e.dataTransfer.files
