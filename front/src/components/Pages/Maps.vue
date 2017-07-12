@@ -305,6 +305,7 @@
     }
 
     .mousePosition {
+      display: none;
       position: fixed;
       right: 0;
       top: 60px;
