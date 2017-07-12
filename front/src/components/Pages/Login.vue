@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col s12 center-align">
                             <input type="submit" value="ENTRAR" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">
-                            <!--<p class="center-align"><a href="#">Esqueceu sua senha?</a></p>-->
+                            <p class="center-align"><a href="http://inscricoes.ncuritiba2017.com.br/lost_password" target="_blank">Esqueceu sua senha?</a></p>
                         </div>
                     </div>
                 </form>
