@@ -70,10 +70,10 @@ export default {
     },
     computed: {
         activityId() {
-            return parseInt(this.$route.params.id)
+            return this.$route.params.id
         },
         activity() {
-            return this.$store.state.activities.find(x => x.id == this.$route.params.id);
+            return this.$store.state.activities.find(x => x.id == this.$route.params.id)
         },
         color() {
             if(this.activity.type != undefined) {
