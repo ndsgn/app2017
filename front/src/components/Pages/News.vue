@@ -2,6 +2,13 @@
   <div class="container">
     <div class="col s12 m7">
 
+        <EditNews 
+            v-if="showModal && admin" 
+            v-on:closeModal="toggleModal()" 
+            :content="editNewsContent" 
+            :mode="editNewsContent.mode" 
+        ></EditNews>
+
         <div v-for="message in news" class="card z-depth-1">
             <div class="card-content">
                 <span class="card-subtitle">{{message.subtitle}}</span>
@@ -27,20 +34,55 @@
 
 <script>
 import FloatButton from "@/components/Shared/FloatButton"
+import EditNews from "@/components/Shared/EditNews"
 
 export default {
     name: 'news',
-    components: {FloatButton},
+    components: {FloatButton, EditNews},
     data () {
         return {
             admin: false,
             showModal: false,
+            editNewsContent: {
+                id: '',
+                title: '',
+                subtitle: '',
+                content: '',
+                mode: 'adding'
+            },
         }
     },
     computed: {
         news() {
             return this.$store.state.news
         }
+    },
+    methods: {
+        toggleModal: function() {
+            this.showModal = !this.showModal;
+            this.editNewsContent = {
+                id: '',
+                title: '',
+                subtitle: '',
+                content: '',
+                mode: 'adding'
+            }
+        },
+        editNews: function(newsId) {
+            let newsItem = ''
+            var news = this.$store.state.news.find(function(item){
+                item.id == newsId ? newsItem = item : false
+            })
+
+            if(newsItem !== '') {
+                this.editNewsContent.id = newsItem.item_id
+                this.editNewsContent.title = newsItem.item_title
+                this.editNewsContent.subtitle = newsItem.item_subtitle
+                this.editNewsContent.content = newsItem.item_content
+                this.editNewsContent.mode = 'editing'
+                this.showModal = true
+            }
+        },
     },
     created() {
         this.$store.dispatch('getNews')

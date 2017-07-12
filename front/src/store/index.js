@@ -85,6 +85,35 @@ const store = new Vuex.Store({
             })
         },
 
+        editNews: function(context, data) {
+            data.admin_hash = localStorage.isAdmin;
+            return Axios.post(API_URL + "/edit_news/" + data.id, data)
+            .then(response => {
+                // se rolou, avisa e atualiza no store a lista de atividades
+                Materialize.toast('Notícia editada com sucesso!', 4000)
+                context.dispatch('getNews')
+                return true
+            }).catch(e => {
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua pergunta não foi salva. Avise a equipe do app, por favor.', 4000)
+            })
+        },
+
+        deleteNews: function(context, data) {
+            data.admin_hash = localStorage.isAdmin;
+            Axios.post(API_URL + "/delete_news/" + data.id, data)
+            .then(response => {
+                // se rolou, avisa e atualiza no store a lista de atividades
+                Materialize.toast('Notícia removida com sucesso!', 4000)
+                context.dispatch('getNews')
+                return true
+            }).catch(e => {
+                // se não rolou, mostra o que tem no localhost, desde que ele exista
+                Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua atividade não foi salva. Avise a equipe do app, por favor.', 4000)
+                return false
+            })
+        },
+
         getFav: function(context) {
             context.commit('GET_FAV')
         },
@@ -138,7 +167,7 @@ const store = new Vuex.Store({
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Atividade removida com sucesso!', 4000)
-                dispatch('getActivities')
+                context.dispatch('getActivities')
                 return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
@@ -167,9 +196,7 @@ const store = new Vuex.Store({
             .then(response => {
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Pergunta editada com sucesso!', 4000)
-                console.log('foi1')
                 context.dispatch('getFaq')
-                console.log('foi2')
                 return true
             }).catch(e => {
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
