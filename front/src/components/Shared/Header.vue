@@ -87,6 +87,12 @@ export default {
         .right {
             position: relative;
             z-index: 2;
+
+            @media only screen and (max-width: 380px) {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
         }
     }
 
@@ -118,6 +124,16 @@ export default {
         font-weight: 500;
         position: relative;
         top: 2px;
+
+        @media only screen and (max-width: 400px) {
+            top: 20px;
+            min-width: 150px;
+            max-width: calc(100% - 122px);
+            line-height: 20px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
     }
 
     .fade-enter-active, .fade-leave-active {

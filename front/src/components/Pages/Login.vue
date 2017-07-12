@@ -15,20 +15,20 @@
                 <form class="col s8" v-on:submit.prevent="login()">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="email" ref="email" type="email" class="validate">
+                            <input id="email" ref="email" type="email" class="validate" autocomplete="off">
                             <label for="email">Email</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="password" ref="password" type="password" class="validate">
+                            <input id="password" ref="password" type="password" class="validate" autocomplete="off">
                             <label for="password">Password</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12 center-align">
                             <input type="submit" value="ENTRAR" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">
-                            <p class="center-align"><a href="#">Esqueceu sua senha?</a></p>
+                            <p class="center-align"><a href="http://inscricoes.ncuritiba2017.com.br/lost_password" target="_blank">Esqueceu sua senha?</a></p>
                         </div>
                     </div>
                 </form>
@@ -38,7 +38,7 @@
                 <div class="col s2">&nbsp;</div>
                 <div class="col s8 center-align">
                     <p class="center-align">Ainda não tem conta?</p>
-                    <a class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">REGISTRAR</a>
+                    <a href="http://inscricoes.ncuritiba2017.com.br/user/cadastrar" target="_blank" class="waves-effect waves-light btn-flat grey lighten-3 grey-text text-darken-4">REGISTRAR</a>
                 </div>
             </div>
 
