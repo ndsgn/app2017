@@ -19,8 +19,8 @@
                 <div class="collection-content">
                     {{faq_item.item_content}}
                     <br><br>
-                    <a class="waves-effect waves-light btn teal accent-4" v-on:click.prevent="editFaq(faq_item.item_id)">Editar</a>
-                    <a class="waves-effect right waves-light btn red accent-4" v-on:click.prevent="deleteFaq(faq_item.item_id)">Apagar</a>
+                    <a class="waves-effect waves-light btn teal accent-4" v-if="admin"  v-on:click.prevent="editFaq(faq_item.item_id)">Editar</a>
+                    <a class="waves-effect right waves-light btn red accent-4" v-if="admin" v-on:click.prevent="deleteFaq(faq_item.item_id)">Apagar</a>
                 </div>
             </li>
         </ul>
