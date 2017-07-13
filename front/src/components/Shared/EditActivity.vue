@@ -32,7 +32,7 @@
                         <label class="active" for="place">Local</label>
                     </div>
 
-                    <div class="file-field input-field col s12">
+                    <!--<div class="file-field input-field col s12">
                         <div class="col s6" style="position: relative">
                             <div class="btn">
                                 <span>Image</span>
@@ -42,7 +42,7 @@
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" @change="saveChange">
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="input-field col s12">
                         <input id="type" ref="type" v-model="activity.type" name="type" type="text" @change="saveChange">
