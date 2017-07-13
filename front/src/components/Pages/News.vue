@@ -67,22 +67,7 @@ export default {
                 content: '',
                 mode: 'adding'
             }
-        },
-        editNews: function(newsId) {
-            let newsItem = ''
-            var news = this.$store.state.news.find(function(item){
-                item.id == newsId ? newsItem = item : false
-            })
-
-            if(newsItem !== '') {
-                this.editNewsContent.id = newsItem.item_id
-                this.editNewsContent.title = newsItem.item_title
-                this.editNewsContent.subtitle = newsItem.item_subtitle
-                this.editNewsContent.content = newsItem.item_content
-                this.editNewsContent.mode = 'editing'
-                this.showModal = true
-            }
-        },
+        }
     },
     created() {
         this.$store.dispatch('getNews')

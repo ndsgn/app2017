@@ -13,9 +13,10 @@ import uuid
 context = SSL.Context(SSL.SSLv23_METHOD)
 
 app = Flask(__name__)
+app.secret_key = 'db23856e7a43dd463788c0277170c006'
 cors = CORS(app, resources={r'/api/*': {'origins': '*'}})
 
-app.config['BASE_URL'] = 'https://localhost:5000/'
+app.config['BASE_URL'] = ''
 app.config['DB_FOLDER'] = 'db/'
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -57,13 +58,13 @@ def edit_activity(activity_id):
             image.save(image_path, format=image.format)
             data['image'] = app.config['BASE_URL'] + 'api/' + image_path
 
-        with open('db/activities.json', 'r') as activities:
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'r') as activities:
             db_data = json.load(activities)
 
         index = 0
         found = False
         for i in db_data:
-            if i['id'] == int(activity_id):
+            if i['id'] == activity_id:
                 found = True
                 break
             index = index + 1
@@ -76,7 +77,8 @@ def edit_activity(activity_id):
         for key, value in data.items():
             db_data[index][key] = value
 
-        with open('db/activities.json', 'w') as activities:
+        del data['admin_hash']
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'w') as activities:
             json.dump(db_data, activities)
 
         return 'Done.'
@@ -91,7 +93,7 @@ def delete_activity(activity_id):
 
     if data['admin_hash'] == ADMIN_HASH:
 
-        with open('db/activities.json', 'r') as activities:
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'r') as activities:
             db_data = json.load(activities)
 
         index = 0
@@ -105,7 +107,8 @@ def delete_activity(activity_id):
         if found:
             del db_data[index]
 
-        with open('db/activities.json', 'w') as activities:
+        del data['admin_hash']
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'w') as activities:
             json.dump(db_data, activities)
 
         return 'Deleted Successfully!'
@@ -121,7 +124,7 @@ def edit_faq(faq_id):
     
     if data['admin_hash'] == ADMIN_HASH:
       
-        with open('db/faq.json', 'r') as faq:
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'r') as faq:
             db_data = json.load(faq)
 
         # Find right group FAQ.
@@ -169,8 +172,9 @@ def edit_faq(faq_id):
 
             del db_data[aux1]['group_content'][aux2]
 
+        del data['admin_hash']
         # Save to JSON.
-        with open('db/faq.json', 'w') as faq:
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'w') as faq:
             json.dump(db_data, faq)
 
         return 'Done.'
@@ -186,7 +190,7 @@ def delete_faq(faq_id):
 
     if data['admin_hash'] == ADMIN_HASH:
 
-        with open('db/faq.json', 'r') as faq:
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'r') as faq:
             db_data = json.load(faq)
 
         # Find right group FAQ.
@@ -208,11 +212,49 @@ def delete_faq(faq_id):
         if found:
             del db_data[aux1]['group_content'][aux2]
 
+        del data['admin_hash']
         # Save to JSON.
-        with open('db/faq.json', 'w') as faq:
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'w') as faq:
             json.dump(db_data, faq)
 
         return 'Successfully deleted.'
+
+    else:
+
+        return Response('Bad credentials.', 401)
+
+@app.route('/api/edit_news/<news_id>', methods=['POST'])
+def edit_news(news_id):
+    data = json.loads(request.data)
+    print(data)
+    
+    if data['admin_hash'] == ADMIN_HASH:
+      
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'news.json', 'r') as faq:
+            db_data = json.load(faq)
+
+        # Find right ID news.
+        aux1 = 0
+        found = False
+        for i in db_data:
+            if i['id'] == news_id:
+                found = False
+                break
+            aux1 = aux1 + 1
+
+        if not found:
+            db_data.append({})
+            news_id = uuid.uuid4()
+            data['id'] = str(uuid.uuid4())
+
+        for key, value in data.items():
+            db_data[aux1][key] = value
+
+        del data['admin_hash']
+        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'news.json', 'w') as activities:
+            json.dump(db_data, activities)
+
+        return 'Done.'
 
     else:
 
