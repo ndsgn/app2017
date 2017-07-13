@@ -1,1 +1,136 @@
-[{"group": "1", "group_title": "Alojamento", "group_content": [{"item_id": "2", "item_title": "Como faz para chegar no alojamento de carro /\u00f4nibus?", "item_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat lorem quis felis porttitor, sed venenatis orci tristique. Interdum et malesuada fames ac ante ipsum primis in faucibus. "}, {"item_id": "3", "item_title": "Tem hoteis / hostels / pousadas perto do alojamento?", "item_content": "Duis neque est, efficitur eu quam a, mattis bibendum mauris. Morbi posuere, dui ac sollicitudin vulputate, quam orci tempor."}, {"item_id": "4", "item_title": "H\u00e1 tomadas no alojamento?", "item_content": "Pellentesque malesuada lectus sed justo consequat posuere. Phasellus id facilisis velit, sed consequat lectus. Quisque accumsan viverra condimentum. In sed eleifend mi, a aliquam turpis. Sed congue ante vel erat sagittis pretium. Sed convallis varius lobortis."}]}, {"group": "2", "group_title": "Inscri\u00e7\u00f5es", "group_content": [{"item_id": "5", "item_title": "Posso transferir minha inscri\u00e7\u00e3o para outra pessoa?", "item_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat lorem quis felis porttitor, sed venenatis orci tristique. Interdum et malesuada fames ac ante ipsum primis in faucibus. "}, {"item_id": "6", "item_title": "O que preciso trazer no dia do encontro para efeturar meu credenciamento?", "item_content": "Duis neque est, efficitur eu quam a, mattis bibendum mauris. Morbi posuere, dui ac sollicitudin vulputate, quam orci tempor."}, {"item_id": "7", "item_title": "V\u00e3o ser vendidas inscri\u00e7\u00f5es di\u00e1rias para o encontro?", "item_content": "Pellentesque malesuada lectus sed justo consequat posuere. Phasellus id facilisis velit, sed consequat lectus. Quisque accumsan viverra condimentum. In sed eleifend mi, a aliquam turpis. Sed congue ante vel erat sagittis pretium. Sed convallis varius lobortis."}]}]
+[
+	{
+		"group": "1",
+		"group_title": "Gerais",
+		"group_content": [
+			{
+				"item_id": "0",
+				"item_title": "Tem certificado de participação? E quantas horas de atividades complementares?",
+				"item_content": "Recebe certificado de participação sim! São 6h por dia de conteúdo, o que dá mais ou menos umas 40 horas complementares."
+			},
+			{
+				"item_id": "1",
+				"item_title": "E se chover durante o encontro?",
+				"item_content": "Todo o encontro vai se passar em locais cobertos. Das atividades, ao alojamento, as festas. Mas se chover é capaz de esfriar também, traga agasalhos!"
+			},
+			{
+				"item_id": "2",
+				"item_title": "Posso vender coisas no encontro sem ser no bazar?",
+				"item_content": "Pode sim! Venda boca-a-boca no encontro é liberado, portanto que não sejam produtos alcoólicos, tabacos, drogas ou afins."
+			}
+		]
+	},
+	{
+		"group": "2",
+		"group_title": "Inscrições, Credenciamento, Alojamento e Alimentação",
+		"group_content": [
+			{
+				"item_id": "0",
+				"item_title": "Fui aprovado no Edital Social. Como será a contribuição? Preciso mesmo levar um cheque calção?",
+				"item_content": "O edital social é para ser igual a qualquer outro encontrista então não tem contribuição nem precisa trazer cheque calção ou assinar a nota promissória. Não precisa trazer nada além do que foi pedido aos encontristas comuns (rg, talheres, etc.)."
+			},
+			{
+				"item_id": "1",
+				"item_title": "Posso transferir minha inscrição para outra pessoa?",
+				"item_content": "Sim. Você e a pessoa para quem vai transferir precisam estar cadastrados no nosso sistema. Feito isso, mande um email para comunicacao@ncuritiba2017.com.br escrito em português formal, listando seus dados (email usado no cadastro do site e CPF) e os da pessoa que vai receber sua inscrição, e afirmando que concorda em transferir a inscrição."
+			},
+			{
+				"item_id": "2",
+				"item_title": "Vão ser vendidas inscrições diárias para o encontro?",
+				"item_content": "Vamos vender inscrições diárias, nas universidades em breve e presencialmente nos dias do encontro também. Vai estar saindo por volta de 50 reais a inscrição diária. Vamos vender presencialmente nas universidades também, provavelmente na UTFPR e UFPR começando semana que vem."
+			},
+			{
+				"item_id": "3",
+				"item_title": "O que preciso trazer no dia do encontro para efeturar meu credenciamento?",
+				"item_content": "Documento de identidade com foto e o comprovante de pagamento do PagSeguro. Caso você seja de algum edital (Preencha, Registro, Apoio, etc.), não esqueça que você vai assinar uma nota promissória referente ao valor da sua isenção!"
+			},
+			{
+				"item_id": "4",
+				"item_title": "Como funciona o alojamento?",
+				"item_content": "O alojamento é em um local coberto que comporta 700 barracas. Cada barraca deve ter uma ocupação de no minimo metade da sua capacidade máxima. Ou seja, uma barraca para 4 pessoas deve ter no mínimo duas dentro!"
+			},
+			{
+				"item_id": "5",
+				"item_title": "Há tomadas no alojamento?",
+				"item_content": "Vão ter algumas tomadas para Celulares e Notebooks. Para chapinha, secador e etc, não garantimos. As tomadas do alojamento são originalmente em 330v e não temos como converter todas elas."
+			},
+			{
+				"item_id": "6",
+				"item_title": "Tem wi-fi para os enconstristas?",
+				"item_content": "Vamos ter uma sala com cabos de rede para Notebook. Talvez tenhamos uma área com Wi-Fi, mas como serão 1300 acessos é melhor ir fazendo um plano maneirinho de 3g/4g."
+			},
+			{
+				"item_id": "7",
+				"item_title": "Tem lugar para estacionar meu carro?",
+				"item_content": "Tem sim, mas o estacionamento na UTFPR funciona somente das 8h às 23h. Se você veio de carro e vai ficar no alojamento, vai precisar achar um estacionamento para deixar seu carro a noite."
+			},
+			{
+				"item_id": "8",
+				"item_title": "Há lugar dentro do local do encontro/alojamento para estacionar ônibus de delegação?",
+				"item_content": "Sim, há vagas ao ar livre para vários ônibus dentro do alojamento."
+			},
+			{
+				"item_id": "9",
+				"item_title": "Onde dormem e comem os motoristas de delegações?",
+				"item_content": "A estadia e alimentação dos motoristas é de completa responsabilidade da delegação. Mas uma dica: muitas empresas de ônibus tem dormitórios para os motoristas em algumas capitais do país. Na delegação da CONDe para o R Sul a hospedagem ficou por conta da empresa e a alimentação foi por nossa conta."
+			},
+			{
+				"item_id": "10",
+				"item_title": "Como vai funcionar o banho no alojamento nesse frio danado?",
+				"item_content": "Teremos containers com chuveiro quente elétrico e outros em anexo para o vestiário! Traga sua toalha, sabonete, shampoo e etc."
+			},
+			{
+				"item_id": "11",
+				"item_title": "Vai ter mesmo cozinha no alojamento?",
+				"item_content": "Vai porém ainda não sabemos o que vai ter lá. Estamos trabalhando para arrumar geladeira, fogão e microondas."
+			},
+			{
+				"item_id": "12",
+				"item_title": "Vai ter panelas na cozinha? O que preciso levar?",
+				"item_content": "Provavelmente vamos ter algumas coisas, mas é sempre bom levar o básico, afinal, são muitas pessoas para usar esse espaço! Uma panela pequena, uma frigideira, talheres, prato e copo já devem ser suficientes para você se virar."
+			},
+			{
+				"item_id": "13",
+				"item_title": "Quantas refeições estão incluídas no pacote alimentação? Há opção vegana?",
+				"item_content": "São sete refeições. O pacote alimentação são só os almoços do dia 16 ao dia 22, ou seja: todos os dias do evento menos o primeiro e o último. Terá a opção vegana e onivora. E se você é celíaco, avise pra gente lá na sua inscrição!"
+			}
+		]
+	},
+	{
+		"group": "3",
+		"group_title": "Festas",
+		"group_content": [
+			{
+				"item_id": "0",
+				"item_title": "Quantas festas vão acontecer e como vão ser?",
+				"item_content": "São 4 festas e cada uma delas tem um um dress code específico. Você pode ir de fantasia nela, mas não precisa seguir o tema."
+			},
+			{
+				"item_id": "1",
+				"item_title": "O pacote de festas vai ser vendido presencialmente e para pessoas de fora?",
+				"item_content": "As festas vão ser vendidas em pacote ou soltas, para encontristas no dia do evento e para pessoas de fora, mas apenas se sobrarem ingressos e priorizando os encontristas."
+			},
+			{
+				"item_id": "2",
+				"item_title": "Tenho menos de 18 anos, posso ir nas festas?",
+				"item_content": "Infelizmente, não. Menores de 18 anos podem participar do encontro e ficar no alojamento, mas não poderão ir nas festas."
+			},
+			{
+				"item_id": "3",
+				"item_title": "Como vai ser o transporte do alojamento para o local de festas?",
+				"item_content": "Vão ter ônibus pra levar a galera pras festas, a gente vai vender o pacote lá com 10 viagens por $25 ou dá pra comprar unitário no mercadinho por $3 a passagem."
+			}
+		]
+	},
+	{
+		"group": "4",
+		"group_title": "CoNE",
+		"group_content": [
+			{
+				"item_id": "0",
+				"item_title": "Quando sai o resultado de representante do CoNE?",
+				"item_content": "O resultado de representante só sai no primeiro dia do CoNE, é a mesa que aprova e confere os documentos."
+			}
+		]
+	}
+]

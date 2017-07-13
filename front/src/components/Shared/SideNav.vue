@@ -8,7 +8,7 @@
         </li>
         <li><router-link to="/news"><i class="material-icons">info_outline</i>Notícias & Informes</router-link></li>
         <li><router-link to="/program"><i class="material-icons">today</i>Grade de Atividades</router-link></li>
-        <li><router-link to="/favs"><i class="material-icons">star</i>Favoritados</router-link></li>
+        <li><router-link to="/favs"><i class="material-icons">star</i>Favoritos</router-link></li>
         <li><router-link to="/maps"><i class="material-icons">map</i>Mapa do Alojamento</router-link></li>
         <li><router-link to="/faq"><i class="material-icons">help_outline</i>Perguntas Frequentes</router-link></li>
         <li><router-link to="/phones"><i class="material-icons">call</i>Telefones Importantes</router-link></li>
