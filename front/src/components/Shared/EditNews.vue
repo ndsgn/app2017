@@ -9,17 +9,17 @@
                     <input type="hidden" name="activityId" v-model="news.id" id="activityId" :value="newsId" >
 
                     <div class="input-field col s12">
-                        <input id="subtitle" ref="item_subtitle" name="subtitle" type="text" v-model="news.subtitle">
+                        <input id="subtitle" ref="subtitle" name="subtitle" type="text" v-model="news.subtitle">
                         <label class="active" for="subtitle">Título menor</label>
                     </div>
                     
                     <div class="input-field col s12">
-                        <input id="title" ref="item_title" name="title" type="text" v-model="news.title">
+                        <input id="title" ref="title" name="title" type="text" v-model="news.title">
                         <label class="active" for="title">Título</label>
                     </div>
 
                     <div class="input-field col s12">
-                        <textarea id="description" ref="item_content" v-model="news.content" name="description" class="materialize-textarea" data-length="120"></textarea>
+                        <textarea id="description" ref="content" v-model="news.content" name="description" class="materialize-textarea" data-length="120"></textarea>
                         <label class="active" for="description">Descrição</label>
                     </div>
 
@@ -67,15 +67,14 @@ export default {
         editNews: function() {
             const that = this
             
-            this.save_data.id = this.mode == 'adding' ? 0 : this.faq.id
-            this.save_data.item_subtitle = this.$refs.item_subtitle.value
-            this.save_data.item_title = this.$refs.item_title.value
-            this.save_data.item_content = this.$refs.item_content.value
+            this.save_data.id = this.mode == 'adding' ? 0 : this.news.id
+            this.save_data.subtitle = this.$refs.subtitle.value
+            this.save_data.title = this.$refs.title.value
+            this.save_data.content = this.$refs.content.value
             this.save_data.mode = this.mode
 
             this.$store.dispatch('editNews', this.save_data)
                 .then(function(response) {
-                    console.log(response)
                     if (response) {
                         that.closeModal()
                     }

@@ -78,7 +78,6 @@ export default {
 
             this.$store.dispatch('editFaq', this.save_data)
                 .then(function(response) {
-                    console.log(response)
                     if (response) {
                         that.closeModal()
                     }
