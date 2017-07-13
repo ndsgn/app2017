@@ -11,8 +11,8 @@
             ></EditActivity>
         </transition>
 
-        <figure>
-            <img :src="activity.image" />
+        <figure style="height: 60px;">
+            <!-- <img :src="activity.image" /> -->
             <router-link to="/program" class="activity-card-clear"><i class="material-icons">clear</i></router-link>
         </figure>
         <header>
