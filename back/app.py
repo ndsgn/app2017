@@ -226,7 +226,6 @@ def delete_faq(faq_id):
 @app.route('/api/edit_news/<news_id>', methods=['POST'])
 def edit_news(news_id):
     data = json.loads(request.data)
-    print(data)
     
     if data['admin_hash'] == ADMIN_HASH:
       
@@ -251,6 +250,35 @@ def edit_news(news_id):
             db_data[aux1][key] = value
 
         del data['admin_hash']
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'news.json', 'w') as activities:
+            json.dump(db_data, activities)
+
+        return 'Done.'
+
+    else:
+
+        return Response('Bad credentials.', 401)
+
+@app.route('/api/delete_news/<news_id>', methods=['POST'])
+def delete_news(news_id):
+    data = json.loads(request.data)
+    
+    if data['admin_hash'] == ADMIN_HASH:
+      
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'news.json', 'r') as faq:
+            db_data = json.load(faq)
+
+        # Find right ID news.
+        aux1 = 0
+        found = False
+        for i in db_data:
+            if i['id'] == news_id:
+                found = False
+                break
+            aux1 = aux1 + 1
+
+        del db_data[aux1]
+
         with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'news.json', 'w') as activities:
             json.dump(db_data, activities)
 
