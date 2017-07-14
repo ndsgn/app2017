@@ -5,7 +5,7 @@ import Axios from 'axios'
 
 Vue.use(Vuex)
 
-var API_URL = 'https://api.ncuritiba2017.com.br/api';
+var API_URL = 'https://localhost:5000/api';
 
 const store = new Vuex.Store({
 
