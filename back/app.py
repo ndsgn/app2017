@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.secret_key = 'db23856e7a43dd463788c0277170c006'
 cors = CORS(app, resources={r'/api/*': {'origins': '*'}})
 
-app.config['BASE_URL'] = ''
+app.config['BASE_PATH'] = ''
 app.config['DB_FOLDER'] = 'db/'
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -56,9 +56,9 @@ def edit_activity(activity_id):
             image = Image.open(cStringIO.StringIO(image_data))
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], str(activity_id) + '.' + (image.format).lower())    
             image.save(image_path, format=image.format)
-            data['image'] = app.config['BASE_URL'] + 'api/' + image_path
+            data['image'] = app.config['BASE_PATH'] + 'api/' + image_path
 
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'r') as activities:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'activities.json', 'r') as activities:
             db_data = json.load(activities)
 
         index = 0
@@ -78,7 +78,7 @@ def edit_activity(activity_id):
             db_data[index][key] = value
 
         del data['admin_hash']
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'w') as activities:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'activities.json', 'w') as activities:
             json.dump(db_data, activities)
 
         return 'Done.'
@@ -93,7 +93,7 @@ def delete_activity(activity_id):
 
     if data['admin_hash'] == ADMIN_HASH:
 
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'r') as activities:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'activities.json', 'r') as activities:
             db_data = json.load(activities)
 
         index = 0
@@ -108,7 +108,7 @@ def delete_activity(activity_id):
             del db_data[index]
 
         del data['admin_hash']
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'activities.json', 'w') as activities:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'activities.json', 'w') as activities:
             json.dump(db_data, activities)
 
         return 'Deleted Successfully!'
@@ -124,7 +124,7 @@ def edit_faq(faq_id):
     
     if data['admin_hash'] == ADMIN_HASH:
       
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'r') as faq:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'faq.json', 'r') as faq:
             db_data = json.load(faq)
 
         # Find right group FAQ.
@@ -174,7 +174,7 @@ def edit_faq(faq_id):
 
         del data['admin_hash']
         # Save to JSON.
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'w') as faq:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'faq.json', 'w') as faq:
             json.dump(db_data, faq)
 
         return 'Done.'
@@ -190,7 +190,7 @@ def delete_faq(faq_id):
 
     if data['admin_hash'] == ADMIN_HASH:
 
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'r') as faq:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'faq.json', 'r') as faq:
             db_data = json.load(faq)
 
         # Find right group FAQ.
@@ -214,7 +214,7 @@ def delete_faq(faq_id):
 
         del data['admin_hash']
         # Save to JSON.
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'faq.json', 'w') as faq:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'faq.json', 'w') as faq:
             json.dump(db_data, faq)
 
         return 'Successfully deleted.'
@@ -230,7 +230,7 @@ def edit_news(news_id):
     
     if data['admin_hash'] == ADMIN_HASH:
       
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'news.json', 'r') as faq:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'news.json', 'r') as faq:
             db_data = json.load(faq)
 
         # Find right ID news.
@@ -251,7 +251,7 @@ def edit_news(news_id):
             db_data[aux1][key] = value
 
         del data['admin_hash']
-        with open(app.config['BASE_URL'] + app.config['DB_FOLDER'] + 'news.json', 'w') as activities:
+        with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'news.json', 'w') as activities:
             json.dump(db_data, activities)
 
         return 'Done.'
