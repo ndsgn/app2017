@@ -41,6 +41,8 @@ export default {
     p.userinfo {
         line-height: 25px;
         padding-bottom: 5px;
+        margin-top: 0;
+        margin-bottom: 0;
 
         strong {
             font-weight: 600;
@@ -49,6 +51,7 @@ export default {
     
     .btn-flat {
         min-width: auto;
+        margin-bottom: 15px;
     }
 
     .side-nav li>a.router-link-active {
