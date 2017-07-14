@@ -226,7 +226,7 @@ export default {
 
     .activity-content {
         padding: 17px;
-        height: calc(70vh - 90px);
+        // height: calc(70vh - 90px);
         overflow: auto;
         padding-bottom: 75px;
 
