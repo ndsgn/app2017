@@ -73,10 +73,10 @@ def edit_activity(activity_id):
             activity_id = uuid.uuid4()
             data['id'] = str(uuid.uuid4())
 
+        del data['admin_hash']    
         for key, value in data.items():
             db_data[index][key] = value
 
-        del data['admin_hash']
         with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'activities.json', 'w') as activities:
             json.dump(db_data, activities)
 
@@ -235,8 +235,10 @@ def edit_news(news_id):
         aux1 = 0
         found = False
         for i in db_data:
+            if len(db_data) == 0:
+                break                
             if i['id'] == news_id:
-                found = False
+                found = True
                 break
             aux1 = aux1 + 1
 
@@ -245,10 +247,10 @@ def edit_news(news_id):
             news_id = uuid.uuid4()
             data['id'] = str(uuid.uuid4())
 
+        del data['admin_hash']
         for key, value in data.items():
             db_data[aux1][key] = value
 
-        del data['admin_hash']
         with open(app.config['BASE_PATH'] + app.config['DB_FOLDER'] + 'news.json', 'w') as activities:
             json.dump(db_data, activities)
 
@@ -271,6 +273,9 @@ def delete_news(news_id):
         aux1 = 0
         found = False
         for i in db_data:
+            if len(db_data) == 0:
+                found = False
+                break 
             if i['id'] == news_id:
                 found = False
                 break

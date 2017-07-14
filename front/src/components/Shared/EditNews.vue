@@ -80,10 +80,6 @@ export default {
                     Materialize.toast('Não conseguimos nos comunicar com o servidor, avise por favor a equipe do app.', 4000)
                 })
         }
-    },
-    mounted: function() {
-    },
-    created() {
     }
 }
 </script>
