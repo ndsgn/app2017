@@ -13,7 +13,9 @@
             <div class="card-content">
                 <span class="card-subtitle">{{message.subtitle}}</span>
                 <span class="card-title">{{message.title}}</span>
-                <p>{{message.content}}</p>
+                <p>{{message.content}}</p><br>
+                <a class="waves-effect waves-light btn teal accent-4" v-if="admin"  v-on:click.prevent="editNews(message.id)">Editar</a>
+                <a class="waves-effect right waves-light btn red accent-4" v-if="admin" v-on:click.prevent="deleteNews(message.id)">Apagar</a>
             </div>
         </div>
 
@@ -50,6 +52,7 @@ export default {
                 content: '',
                 mode: 'adding'
             },
+            delete_data: {}
         }
     },
     computed: {
@@ -67,6 +70,37 @@ export default {
                 content: '',
                 mode: 'adding'
             }
+        },
+        editNews: function(newsId) {
+            let newsItem = ''
+
+            var news = this.$store.state.news.find(function (item) {
+                console.log(newsId)
+                item.id == newsId ? newsItem = item : false 
+            })
+
+            if(newsId !== '') {
+                this.editNewsContent.id = newsItem.id
+                this.editNewsContent.title = newsItem.title
+                this.editNewsContent.subtitle = newsItem.subtitle
+                this.editNewsContent.content = newsItem.content
+                this.editNewsContent.mode = 'editing'
+                this.showModal = true
+            }
+        },
+        deleteNews: function(newsId) {
+            let newsItem = ''
+
+            var news = this.$store.state.news.find(function (item) {
+                console.log(newsId)
+                item.id == newsId ? newsItem = item : false 
+            })
+
+            if(newsItem !== '') {
+                this.delete_data.id = newsItem.id
+            }
+
+            this.$store.dispatch('deleteNews', this.delete_data);
         }
     },
     created() {
@@ -86,6 +120,10 @@ export default {
 
         .card-content {
             padding: 15px;
+
+            a.btn {
+                min-width: inherit;
+            }
         }
 
         .card-subtitle {

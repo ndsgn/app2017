@@ -53,11 +53,8 @@ export default {
     },
     computed: {
         words() {
-            (this.content && this.content != '') ? this.faq = this.content : ''
+            (this.content && this.content != '') ? this.news = this.content : '';
             return this.mode == 'adding' ? 'Adicionar' : 'Editar'
-        },
-        group() {
-            return this.$store.state.faq
         }
     },
     methods: {
