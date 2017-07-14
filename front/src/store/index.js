@@ -89,13 +89,11 @@ const store = new Vuex.Store({
             data.admin_hash = localStorage.isAdmin;
             return Axios.post(API_URL + "/edit_news/" + data.id, data)
             .then(response => {
-                console.log(response)
                 // se rolou, avisa e atualiza no store a lista de atividades
                 Materialize.toast('Notícia editada com sucesso!', 4000)
                 context.dispatch('getNews')
                 return true
             }).catch(e => {
-                console.log(e)
                 // se não rolou, mostra o que tem no localhost, desde que ele exista
                 Materialize.toast('Ops! Aconteceu um erro de comunicação com o <Br>servidor, e sua pergunta não foi salva. Avise a equipe do app, por favor.', 4000)
             })

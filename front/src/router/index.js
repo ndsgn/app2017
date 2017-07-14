@@ -177,8 +177,13 @@ router.beforeEach((to, from, next) => {
       localEmail != '' ? next({ path: '/program'}) : next()
     } else {
       if (!stateEmail) {
+
         localEmail && localEmail!= '' ? store.commit('GET_USER', localEmail) : next({ path: '/' })
-        localStorage.isAdmin && localStorage.useremail != '' ? store.commit('SET_ADMIN', localStorage.isAdmin) : ''
+        if(localStorage.isAdmin != 'false' && localStorage.useremail != '') {
+          store.commit('SET_ADMIN', localStorage.isAdmin) 
+        } else {
+          store.commit('SET_ADMIN', false) 
+        }
         next()
 
       } else {
