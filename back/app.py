@@ -32,7 +32,6 @@ def login():
             is_admin = True
 
     if is_admin:
-        print(ADMIN_RESPONSE)
         return ADMIN_RESPONSE
     else:
         login_request = requests.post('http://inscricoes.ncuritiba2017.com.br/login', data = request.data)

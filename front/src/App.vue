@@ -14,11 +14,10 @@
     methods: {
     },
     mounted () {  
+      
     },
     created() {
-      $('body').on('click', '.collection-item-question', function() {
-          $(this).next('.collection-content').slideToggle()
-      })
+
     }
   }
 </script>

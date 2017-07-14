@@ -12,18 +12,20 @@
 
     <div class="col s12 m7">
 
-        <ul class="collection" v-for="faq_group in faq">
-            <li class="collection-item collection-item-header">{{faq_group.group_title}}</li>
-            <li v-for="faq_item in faq_group.group_content" class="collection-item">
-                <span class="collection-item-question">{{faq_item.item_title}}</span>
-                <div class="collection-content">
-                    {{faq_item.item_content}}
-                    <br><br>
-                    <a class="waves-effect waves-light btn teal accent-4" v-if="admin"  v-on:click.prevent="editFaq(faq_item.item_id)">Editar</a>
-                    <a class="waves-effect right waves-light btn red accent-4" v-if="admin" v-on:click.prevent="deleteFaq(faq_item.item_id)">Apagar</a>
-                </div>
-            </li>
-        </ul>
+        <div v-for="faq_group in faq">
+            <h5>{{faq_group.group_title}}</h5>
+            <ul class="collapsible" data-collapsible="expandable">
+                <li v-for="faq_item in faq_group.group_content">
+                    <div class="collapsible-header">{{faq_item.item_title}}</div>
+                    <div class="collapsible-body">
+                        {{faq_item.item_content}}
+                        <br v-if="admin"><br v-if="admin">
+                        <a class="waves-effect waves-light btn teal accent-4" v-if="admin"  v-on:click.prevent="editFaq(faq_item.item_id)">Editar</a>
+                        <a class="waves-effect right waves-light btn red accent-4" v-if="admin" v-on:click.prevent="deleteFaq(faq_item.item_id)">Apagar</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
         
     </div>
 
@@ -112,6 +114,12 @@ export default {
             this.$store.dispatch('deleteFaq', this.delete_data);
         }
     },
+    mounted() {
+        $(document).ready(function(){
+            console.log($('.collapsible').collapsible());
+            $('.collapsible').collapsible();
+        });
+    },
     created() {
         this.$store.dispatch('getFaq');
         this.admin = this.$store.state.isAdmin
@@ -125,51 +133,16 @@ export default {
         padding: 15px 0 30px;
     }
 
-    ul.collection {
-        width: 96vw;
-        margin: 0 auto 2vw;
-        position: relative;
-        left: -13px;
-
-        @media only screen and (min-width: 660px) {
-            width: 90%;
-            max-width: 990px;
-            margin: 0 auto;
-            left: 0;
-            margin-bottom: 15px;
-        }
-        
-        li {
-
-            &.collection-item {
-
-                &.collection-item-header {
-                    font-size: 14px;
-                    font-weight: 600;
-                    padding-top: 20px;
-                    text-transform: uppercase;
-                }
-
-                .collection-content {
-                    display: none;
-                    padding: 10px 0 8px 0;
-                    color: #999;
-                    font-size: 14px;
-                    line-height: 19px;
-
-                    a.btn {
-                        min-width: inherit;
-                    }
-                }
-
-                &.collection-item-open {
-
-                    .collection-content {
-                        display: block;
-                    }
-                }
-            
-            }
-        }
+    h5 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 30px 0 15px;
     }
+    
+    .collapsible-header {
+        min-height: 0rem;
+        line-height: 1.5rem;
+        padding: 15px;
+    }
+    
 </style>
