@@ -19,7 +19,7 @@ idna==2.5
 ipaddress==1.0.18
 itsdangerous==0.24
 jellyfish==0.5.6
-Jinja2==2.9.6
+Jinja2==2.11.3
 jmespath==0.9.3
 MarkupSafe==1.0
 munkres==1.0.12
